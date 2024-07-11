@@ -3,12 +3,6 @@ export interface Calendar {
   isWeekend: boolean
   description?: string
 }
-
-export enum LeaveType {
-  ANNUAL_LEAVE = 'Godisnji odmor',
-  SICK_LEAVE = 'Bolovanje'
-}
-
 export interface RangeConfig {
   noDisabledRange?: boolean
   showLastInRange?: boolean
@@ -20,6 +14,11 @@ export interface RangeConfig {
   maxRange?: string | number
   minRange?: string | number
   autoRange?: string | number
+}
+
+export enum LeaveType {
+  ANNUAL_LEAVE = 'Godisnji odmor',
+  SICK_LEAVE = 'Bolovanje'
 }
 
 export enum ErrorType {
