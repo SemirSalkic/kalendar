@@ -1,30 +1,32 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { LeaveType, type Calendar } from './types'
+import type { Calendar } from './types'
 
 export const useCalendarStore = defineStore('calendar', () => {
+  const today = ref(new Date())
   const calendarDays = ref<Calendar[]>([])
 
-  function getDaysInMonth(year: number, month: number): Date[] {
-    const days: Date[] = []
-    const currentDate = new Date(year, month, 1)
-    while (currentDate.getMonth() === month) {
-      days.push(new Date(currentDate))
-      currentDate.setDate(currentDate.getDate() + 1)
+  const firstDayOfMonth = computed(
+    () => new Date(today.value.getFullYear(), today.value.getMonth(), 1)
+  )
+  const lastDayOfMonth = computed(
+    () => new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
+  )
+
+  const generateCalendarDays = () => {
+    const startDay = new Date(today.value.getFullYear(), today.value.getMonth(), 1)
+    const daysInMonth: Calendar[] = []
+
+    while (startDay.getMonth() === today.value.getMonth()) {
+      daysInMonth.push({
+        day: startDay.getDate(),
+        isWeekend: [0, 6].includes(startDay.getDay())
+      })
+      startDay.setDate(startDay.getDate() + 1)
     }
-    return days
+
+    calendarDays.value = daysInMonth
   }
 
-  function generateCalendarDays() {
-    const today = new Date()
-    const days = getDaysInMonth(today.getFullYear(), today.getMonth())
-
-    calendarDays.value = days.map((day) => ({
-      day: day.getDate(),
-      isWeekend: day.getDay() === 0 || day.getDay() === 6,
-      description: LeaveType.SICK_LEAVE
-    }))
-  }
-
-  return { calendarDays, generateCalendarDays }
+  return { calendarDays, generateCalendarDays, today, firstDayOfMonth, lastDayOfMonth }
 })
