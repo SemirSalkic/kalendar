@@ -100,7 +100,7 @@ watch(
               <button
                 :class="[
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm ',
-                  active ? 'bg-neutral-500 text-white' : 'text-black dark:text-white'
+                  active ? 'bg-zinc-700 text-white' : 'text-black dark:text-white'
                 ]"
               >
                 <p>
