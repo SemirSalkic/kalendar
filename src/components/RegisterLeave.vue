@@ -4,7 +4,8 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const isDark = useDark()
-const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(useCalendarStore())
+const calendarStore = useCalendarStore()
+const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(calendarStore)
 const dates = ref<Date[]>([])
 const selectedLeaveType = ref()
 const errorText = ref<string>('')
@@ -16,15 +17,16 @@ function calculateDiffDays(startDate: Date, endDate: Date): number {
 }
 
 function includesWeekend(startDate: Date, endDate: Date): boolean {
-  if (startDate > endDate) {
-    return false
-  }
-  if (startDate.getDay() === 0 || startDate.getDay() === 6) {
-    return true
-  }
+  if (startDate > endDate) return false
+  if (startDate.getDay() === 0 || startDate.getDay() === 6) return true
+
   const nextDay = new Date(startDate)
   nextDay.setDate(startDate.getDate() + 1)
   return includesWeekend(nextDay, endDate)
+}
+
+function addLeaveType() {
+  calendarStore.addLeaveTypeToCalendar(dates.value, selectedLeaveType.value)
 }
 
 watch(dates, (newDates) => {
@@ -61,7 +63,8 @@ const emit = defineEmits<{
       <VDropdown
         id="leaveType"
         name="leaveType"
-        :list="[LeaveType.ANNUAL_LEAVE, LeaveType.SICK_LEAVE]"
+        class="w-36"
+        :list="[LeaveType.ANNUAL_LEAVE, LeaveType.SICK_LEAVE, LeaveType.EMPTY]"
         :pre-select="true"
         @selected="(_, type) => (selectedLeaveType = type)"
       ></VDropdown>
@@ -91,6 +94,7 @@ const emit = defineEmits<{
         color="success"
         label="Sačuvaj"
         :disabled="!dates.length || !!errorText"
+        @click="addLeaveType()"
       ></VButton>
       <VButton
         class="w-24 self-center rounded-md"

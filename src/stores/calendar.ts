@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { Calendar } from './types'
+import { LeaveType, type Calendar } from './types'
 
 export const useCalendarStore = defineStore('calendar', () => {
   const today = ref(new Date())
@@ -13,7 +13,7 @@ export const useCalendarStore = defineStore('calendar', () => {
     () => new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
   )
 
-  const generateCalendarDays = () => {
+  function generateCalendarDays(): Calendar[] {
     const startDay = new Date(today.value.getFullYear(), today.value.getMonth(), 1)
     const daysInMonth: Calendar[] = []
 
@@ -26,7 +26,31 @@ export const useCalendarStore = defineStore('calendar', () => {
     }
 
     calendarDays.value = daysInMonth
+    return daysInMonth
   }
 
-  return { calendarDays, generateCalendarDays, today, firstDayOfMonth, lastDayOfMonth }
+  function addLeaveTypeToCalendar(dates: Date[], leaveType: LeaveType) {
+    const startDate = dates[0]
+    const endDate = dates.length > 1 ? dates[1] : dates[0]
+    const days = calendarDays.value
+
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      const dayIndex = days.findIndex(
+        (day) => day.day === d.getDate() && d.getMonth() === today.value.getMonth()
+      )
+      if (dayIndex !== -1) {
+        days[dayIndex].description = leaveType === LeaveType.EMPTY ? '' : leaveType
+      }
+    }
+
+    calendarDays.value = [...days]
+  }
+  return {
+    calendarDays,
+    generateCalendarDays,
+    today,
+    firstDayOfMonth,
+    lastDayOfMonth,
+    addLeaveTypeToCalendar
+  }
 })
