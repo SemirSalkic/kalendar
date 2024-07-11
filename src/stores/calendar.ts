@@ -6,16 +6,27 @@ export const useCalendarStore = defineStore('calendar', () => {
   const today = ref(new Date())
   const calendarDays = useLocalStorage<Calendar[]>('calendarDays', [])
 
-  const firstDayOfMonth = computed(
-    () => new Date(today.value.getFullYear(), today.value.getMonth(), 1)
-  )
-  const lastDayOfMonth = computed(
-    () => new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
+  const getFirstDayOfMonth = () => new Date(today.value.getFullYear(), today.value.getMonth(), 1)
+  const getLastDayOfMonth = () => new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
+
+  const firstDayOfMonth = computed(getFirstDayOfMonth)
+  const lastDayOfMonth = computed(getLastDayOfMonth)
+
+  const usedSickDays = computed(
+    () => calendarDays.value.filter((day) => day.description === LeaveType.SICK_LEAVE).length
   )
 
-  const usedSickDays = computed(() => {
-    return calendarDays.value.filter((day) => day.description === LeaveType.SICK_LEAVE).length
-  })
+  const isTodayInCurrentMonth = computed(() =>
+    calendarDays.value.some((day) => day.date === formatDate(today.value))
+  )
+
+  function formatDate(date: Date): string {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+  }
 
   function generateCalendarDays(): Calendar[] {
     const startDay = new Date(today.value.getFullYear(), today.value.getMonth(), 1)
@@ -24,6 +35,7 @@ export const useCalendarStore = defineStore('calendar', () => {
     while (startDay.getMonth() === today.value.getMonth()) {
       daysInMonth.push({
         day: startDay.getDate(),
+        date: formatDate(startDay),
         isWeekend: [0, 6].includes(startDay.getDay())
       })
       startDay.setDate(startDay.getDate() + 1)
@@ -34,20 +46,19 @@ export const useCalendarStore = defineStore('calendar', () => {
   }
 
   function addLeaveTypeToCalendar(dates: Date[], leaveType: LeaveType) {
-    const startDate = dates[0]
-    const endDate = dates.length > 1 ? dates[1] : dates[0]
-    const days = calendarDays.value
+    const [startDate, endDate] = dates.length === 1 ? [dates[0], dates[0]] : [dates[0], dates[1]]
+    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())
+    const end = endDate
+      ? new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())
+      : start
 
-    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-      const dayIndex = days.findIndex(
-        (day) => day.day === d.getDate() && d.getMonth() === today.value.getMonth()
-      )
-      if (dayIndex !== -1) {
-        days[dayIndex].description = leaveType === LeaveType.EMPTY ? '' : leaveType
+    calendarDays.value = calendarDays.value.map((day) => {
+      const dayDate = new Date(today.value.getFullYear(), today.value.getMonth(), day.day)
+      if (dayDate >= start && dayDate <= end) {
+        return { ...day, description: leaveType !== LeaveType.EMPTY ? leaveType : '' }
       }
-    }
-
-    calendarDays.value = [...days]
+      return day
+    })
   }
 
   return {
@@ -57,6 +68,7 @@ export const useCalendarStore = defineStore('calendar', () => {
     firstDayOfMonth,
     lastDayOfMonth,
     usedSickDays,
+    isTodayInCurrentMonth,
     addLeaveTypeToCalendar
   }
 })

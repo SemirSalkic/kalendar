@@ -1,5 +1,6 @@
 export interface Calendar {
   day: number
+  date: string
   isWeekend: boolean
   description?: string
 }
