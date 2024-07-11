@@ -50,8 +50,7 @@ const basic = computed(() => !props.color)
         'border-slate-700 bg-white text-black hover:opacity-70 active:opacity-80': white
       },
       {
-        'border-neutral-700 bg-neutral-600 text-white hover:bg-neutral-500 active:bg-neutral-600':
-          neutral
+        'border-zinc-900 bg-zinc-800 text-white hover:bg-zinc-700 active:bg-zinc-600': neutral
       },
       {
         'border-indigo-900 bg-indigo-800 text-white hover:bg-indigo-700 active:bg-indigo-800': basic

@@ -62,7 +62,7 @@ watch(
       <MenuButton
         v-bind="$attrs"
         :disabled="disabled"
-        class="flex items-center justify-between rounded-md border-2 dark:border-neutral-600 dark:text-white bg-white dark:bg-neutral-600 px-2 text-sm font-medium text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-opacity-75"
+        class="flex items-center justify-between rounded-md border-2 dark:border-zinc-800 dark:text-white bg-white dark:bg-zinc-800 px-2 text-sm font-medium text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-opacity-75"
         :class="{ 'text-gray-400': disabled }"
       >
         <div v-if="!label">
@@ -87,7 +87,7 @@ watch(
       >
         <MenuItems
           v-show="open"
-          class="absolute z-50 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md dark:bg-neutral-600 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="absolute z-50 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md dark:bg-zinc-800 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <div>
             <MenuItem
