@@ -5,10 +5,10 @@ import { storeToRefs } from 'pinia'
 import { useCalendarStore } from '@/stores/calendar'
 
 const calendarStore = useCalendarStore()
-const { calendarDays } = storeToRefs(calendarStore)
+const { calendarDays, isTodayInCurrentMonth } = storeToRefs(calendarStore)
 
 onMounted(() => {
-  if (calendarDays.value.length === 0) {
+  if (calendarDays.value.length === 0 || !isTodayInCurrentMonth.value) {
     calendarStore.generateCalendarDays()
   }
 })
