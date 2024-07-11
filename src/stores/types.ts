@@ -18,7 +18,8 @@ export interface RangeConfig {
 
 export enum LeaveType {
   ANNUAL_LEAVE = 'Godisnji odmor',
-  SICK_LEAVE = 'Bolovanje'
+  SICK_LEAVE = 'Bolovanje',
+  EMPTY = 'Izbrisi uneseno'
 }
 
 export enum ErrorType {
