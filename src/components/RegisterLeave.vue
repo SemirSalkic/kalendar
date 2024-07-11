@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-import { ErrorType } from '@/stores/types'
 
 const isDark = useDark()
 const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(useCalendarStore())
