@@ -69,3 +69,11 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Deployment
+
+The app is deployed on [Netlify](https://www.netlify.com/).
+
+You can view the live site here: [https://calendar-management.netlify.app](https://calendar-management.netlify.app)
+
+It automatically deploys from the main branch on GitHub.

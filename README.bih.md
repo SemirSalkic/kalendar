@@ -69,3 +69,11 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Deplojanje
+
+Aplikacija je postavljena na [Netlify](https://www.netlify.com/).
+
+Možete pogledati live sajt ovdje: [https://calendar-management.netlify.app](https://calendar-management.netlify.app)
+
+Automatski se postavlja iz glavne grane na GitHubu.
