@@ -63,13 +63,13 @@ const emit = defineEmits<{
 
 <template>
   <div class="flex flex-col items-center justify-center p-2 text-black dark:text-white gap-4">
-    <TitleComponent title="Registrovanje odsustva"></TitleComponent>
+    <TitleComponent title="Registrovanje odsustva" class="mb-6"></TitleComponent>
     <div class="flex items-center gap-2">
       <label class="pl-1 text-left" for="leaveType"> Vrsta odsustva: </label>
       <VDropdown
         id="leaveType"
         name="leaveType"
-        class="w-36"
+        class="w-44 h-10"
         :list="[LeaveType.ANNUAL_LEAVE, LeaveType.SICK_LEAVE, LeaveType.EMPTY]"
         :pre-select="true"
         @selected="(_, type) => (selectedLeaveType = type)"
@@ -94,7 +94,7 @@ const emit = defineEmits<{
         <ErrorText v-if="errorText" :error-text="errorText"></ErrorText>
       </div>
     </div>
-    <div class="flex gap-4">
+    <div class="flex gap-4 mt-6">
       <VButton
         class="w-24 self-center rounded-md"
         color="success"
