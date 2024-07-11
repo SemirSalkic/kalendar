@@ -13,6 +13,7 @@ const isDialogOpen = ref(false)
         <div class="flex justify-between w-full mb-4">
           <TitleComponent title="Kalendar"></TitleComponent>
           <VButton
+            class="self-center rounded-md"
             color="neutral"
             label="Registruj odsustvo"
             @click="isDialogOpen = true"
