@@ -16,13 +16,13 @@ function calculateDiffDays(startDate: Date, endDate: Date): number {
   return Math.ceil(diffTime / MILLISECONDS_PER_DAY) + 1
 }
 
-function includesWeekend(startDate: Date, endDate: Date): boolean {
-  if (startDate > endDate) return false
-  if (startDate.getDay() === 0 || startDate.getDay() === 6) return true
-
-  const nextDay = new Date(startDate)
-  nextDay.setDate(startDate.getDate() + 1)
-  return includesWeekend(nextDay, endDate)
+const includesWeekend = (startDate: Date, endDate: Date) => {
+  let currentDate = new Date(startDate)
+  while (currentDate <= endDate) {
+    if ([0, 6].includes(currentDate.getDay())) return true
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+  return false
 }
 
 function addLeaveType() {
