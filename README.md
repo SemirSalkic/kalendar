@@ -11,7 +11,7 @@ This Vue.js application is crafted to streamline the management and display of c
 - **Calendar Display**: Visualize and interact with monthly calendar views.
 - **Leave Registration**: Register and track leave periods with ease.
 - **Reusable UI Components**: Enhance the user experience with common interface elements.
-- **Tailwind CSS Integration**: Utilize utility-first styling for a responsive design.
+- **Tailwind CSS Integration**: Utilize utility-first styling for a responsive design and a dark theme.
 - **Modern Development Stack**: Employ Vite, TypeScript, and ESLint for a streamlined development experience.
 
 ## Built With

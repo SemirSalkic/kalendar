@@ -11,7 +11,7 @@ Ova Vue.js aplikacija je dizajnirana da pojednostavi upravljanje i prikaz inform
 - **Prikaz Kalendara**: Vizualizujte i interagujte s mjesečnim pregledima kalendara.
 - **Registracija Odsustva**: Jednostavno registrujte i pratite periode odsustva.
 - **Ponovno Upotrebljivi UI Komponenti**: Poboljšajte korisničko iskustvo s uobičajenim elementima interfejsa.
-- **Integracija Tailwind CSS-a**: Iskoristite stilizovanje zasnovano na funkcionalnosti za odzivan dizajn.
+- **Integracija Tailwind CSS-a**: Iskoristite stilizovanje zasnovano na funkcionalnosti za odzivan dizajn i mračnu temu.
 - **Moderan Razvojni Skup Alata**: Koristite Vite, TypeScript i ESLint za pojednostavljeni razvojni doživljaj.
 
 ## Izgrađeno Pomoću
