@@ -2,7 +2,7 @@
 export interface VButtonProps {
   label?: string
   type?: ButtonType
-  color?: 'success' | 'error' | 'info' | 'warning' | 'white' | 'neutral' | 'brand'
+  color?: 'success' | 'error' | 'info' | 'warning' | 'white' | 'neutral'
   disabled?: boolean
   loading?: boolean
 }
@@ -25,7 +25,6 @@ const error = computed(() => props.color === 'error')
 const warning = computed(() => props.color === 'warning')
 const info = computed(() => props.color === 'info')
 const white = computed(() => props.color === 'white')
-const brand = computed(() => props.color === 'brand')
 const neutral = computed(() => props.color === 'neutral')
 const basic = computed(() => !props.color)
 </script>
@@ -49,9 +48,6 @@ const basic = computed(() => !props.color)
       },
       {
         'border-slate-700 bg-white text-black hover:opacity-70 active:opacity-80': white
-      },
-      {
-        'border-brand bg-brand-500 text-white hover:bg-brand-300 active:bg-brand-700': brand
       },
       {
         'border-neutral-700 bg-neutral-600 text-white hover:bg-neutral-500 active:bg-neutral-600':
