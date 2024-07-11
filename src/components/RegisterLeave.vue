@@ -28,6 +28,7 @@ const includesWeekend = (startDate: Date, endDate: Date) => {
 
 function addLeaveType() {
   calendarStore.addLeaveTypeToCalendar(dates.value, selectedLeaveType.value)
+  emit('cancel')
 }
 
 watch(dates, (newDates) => {
