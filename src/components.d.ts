@@ -10,9 +10,13 @@ declare module 'vue' {
     CalendarCard: typeof import('./components/CalendarCard.vue')['default']
     CalendarView: typeof import('./components/CalendarView.vue')['default']
     ConfirmationDialog: typeof import('./components/ConfirmationDialog.vue')['default']
+    ErrorText: typeof import('./components/reusableComponents/ErrorText.vue')['default']
+    RegisterLeave: typeof import('./components/RegisterLeave.vue')['default']
     TitleComponent: typeof import('./components/reusableComponents/TitleComponent.vue')['default']
     VButton: typeof import('./components/reusableComponents/VButton.vue')['default']
+    VButtonIcon: typeof import('./components/reusableComponents/VButtonIcon.vue')['default']
     VDialog: typeof import('./components/reusableComponents/VDialog.vue')['default']
+    VInput: typeof import('./components/reusableComponents/VInput.vue')['default']
     VSwitch: typeof import('./components/reusableComponents/VSwitch.vue')['default']
   }
 }
