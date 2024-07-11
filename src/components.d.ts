@@ -16,6 +16,7 @@ declare module 'vue' {
     VButton: typeof import('./components/reusableComponents/VButton.vue')['default']
     VButtonIcon: typeof import('./components/reusableComponents/VButtonIcon.vue')['default']
     VDialog: typeof import('./components/reusableComponents/VDialog.vue')['default']
+    VDropdown: typeof import('./components/reusableComponents/VDropdown.vue')['default']
     VInput: typeof import('./components/reusableComponents/VInput.vue')['default']
     VSwitch: typeof import('./components/reusableComponents/VSwitch.vue')['default']
   }

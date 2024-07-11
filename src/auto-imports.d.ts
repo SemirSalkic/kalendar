@@ -6,6 +6,7 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const ErrorType: typeof import('./stores/types')['ErrorType']
   const LeaveType: typeof import('./stores/types')['LeaveType']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
@@ -297,7 +298,7 @@ declare global {
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { LeaveType } from './stores/types'
+  export type { LeaveType, ErrorType } from './stores/types'
   import('./stores/types')
 }
 // for vue template auto import
@@ -306,6 +307,7 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ErrorType: UnwrapRef<typeof import('./stores/types')['ErrorType']>
     readonly LeaveType: UnwrapRef<typeof import('./stores/types')['LeaveType']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -594,6 +596,7 @@ declare module '@vue/runtime-core' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ErrorType: UnwrapRef<typeof import('./stores/types')['ErrorType']>
     readonly LeaveType: UnwrapRef<typeof import('./stores/types')['LeaveType']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>

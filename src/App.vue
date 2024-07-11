@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const isDark = useDark()
+const isDialogOpen = ref(false)
 </script>
 
 <template>
@@ -11,11 +12,18 @@ const isDark = useDark()
       <div class="border-2 p-4 flex flex-col items-center rounded-xl">
         <div class="flex justify-between w-full mb-4">
           <TitleComponent title="Kalendar"></TitleComponent>
-          <VButton color="neutral" label="Registruj odsustvo"></VButton>
+          <VButton
+            color="neutral"
+            label="Registruj odsustvo"
+            @click="isDialogOpen = true"
+          ></VButton>
         </div>
         <CalendarView></CalendarView>
       </div>
     </div>
+    <VDialog v-model="isDialogOpen" class="max-w-5xl gap-4 px-4 py-6">
+      <RegisterLeave @cancel="isDialogOpen = false"></RegisterLeave>
+    </VDialog>
   </main>
 </template>
 
