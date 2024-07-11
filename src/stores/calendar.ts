@@ -4,7 +4,7 @@ import { LeaveType, type Calendar } from './types'
 
 export const useCalendarStore = defineStore('calendar', () => {
   const today = ref(new Date())
-  const calendarDays = ref<Calendar[]>([])
+  const calendarDays = useLocalStorage<Calendar[]>('calendarDays', [])
 
   const firstDayOfMonth = computed(
     () => new Date(today.value.getFullYear(), today.value.getMonth(), 1)
