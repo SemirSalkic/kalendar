@@ -1,8 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { LeaveType, type Calendar } from './types'
 
 export const useCalendarStore = defineStore('calendar', () => {
-  const calendarDays = ref<{ day: number; isWeekend: boolean; description: string }[]>([])
+  const calendarDays = ref<Calendar[]>([])
 
   function getDaysInMonth(year: number, month: number): Date[] {
     const days: Date[] = []
@@ -21,7 +22,7 @@ export const useCalendarStore = defineStore('calendar', () => {
     calendarDays.value = days.map((day) => ({
       day: day.getDate(),
       isWeekend: day.getDay() === 0 || day.getDay() === 6,
-      description: 'Godisnji odmor'
+      description: LeaveType.SICK_LEAVE
     }))
   }
 

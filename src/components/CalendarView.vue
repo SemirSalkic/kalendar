@@ -8,7 +8,9 @@ const calendarStore = useCalendarStore()
 const { calendarDays } = storeToRefs(calendarStore)
 
 onMounted(() => {
-  calendarStore.generateCalendarDays()
+  if (calendarDays.value.length === 0) {
+    calendarStore.generateCalendarDays()
+  }
 })
 </script>
 
