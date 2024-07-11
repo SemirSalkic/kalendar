@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineProps<{
   day: number
-  description: string
   isWeekend: boolean
+  description?: string
 }>()
 </script>
 
