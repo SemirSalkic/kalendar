@@ -13,7 +13,7 @@ const isDark = useDark()
           <TitleComponent title="Kalendar"></TitleComponent>
           <VButton color="neutral" label="Registruj odsustvo"></VButton>
         </div>
-        <CalenderView></CalenderView>
+        <CalendarView></CalendarView>
       </div>
     </div>
   </main>
