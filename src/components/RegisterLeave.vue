@@ -33,16 +33,14 @@ function addLeaveType() {
 watch(dates, (newDates) => {
   errorText.value = ''
 
-  if (newDates.length >= 1 && newDates[0]) {
+  if (newDates.length && newDates[0]) {
     const diffDays = newDates[1] ? calculateDiffDays(newDates[0], newDates[1]) : 1
 
-    if (selectedLeaveType.value === LeaveType.SICK_LEAVE) {
-      const usedDays = usedSickDays.value
-      const remainingSickDays = totalSickDays - usedDays
-
-      if ((usedDays >= totalSickDays && diffDays > 1) || diffDays > remainingSickDays) {
-        errorText.value = ErrorType.SICK_ERROR
-      }
+    if (
+      selectedLeaveType.value === LeaveType.SICK_LEAVE &&
+      usedSickDays.value + diffDays > totalSickDays
+    ) {
+      errorText.value = ErrorType.SICK_ERROR
     } else if (
       selectedLeaveType.value === LeaveType.ANNUAL_LEAVE &&
       newDates[1] &&
