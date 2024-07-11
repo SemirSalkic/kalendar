@@ -13,6 +13,10 @@ export const useCalendarStore = defineStore('calendar', () => {
     () => new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
   )
 
+  const usedSickDays = computed(() => {
+    return calendarDays.value.filter((day) => day.description === LeaveType.SICK_LEAVE).length
+  })
+
   function generateCalendarDays(): Calendar[] {
     const startDay = new Date(today.value.getFullYear(), today.value.getMonth(), 1)
     const daysInMonth: Calendar[] = []
@@ -45,12 +49,14 @@ export const useCalendarStore = defineStore('calendar', () => {
 
     calendarDays.value = [...days]
   }
+
   return {
     calendarDays,
     generateCalendarDays,
     today,
     firstDayOfMonth,
     lastDayOfMonth,
+    usedSickDays,
     addLeaveTypeToCalendar
   }
 })

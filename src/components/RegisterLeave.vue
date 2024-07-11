@@ -5,11 +5,12 @@ import '@vuepic/vue-datepicker/dist/main.css'
 
 const isDark = useDark()
 const calendarStore = useCalendarStore()
-const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(calendarStore)
+const { firstDayOfMonth, lastDayOfMonth, usedSickDays } = storeToRefs(calendarStore)
 const dates = ref<Date[]>([])
 const selectedLeaveType = ref()
 const errorText = ref<string>('')
 const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24
+const totalSickDays = 7
 
 function calculateDiffDays(startDate: Date, endDate: Date): number {
   const diffTime = Math.abs(endDate.getTime() - startDate.getTime())
@@ -32,13 +33,19 @@ function addLeaveType() {
 watch(dates, (newDates) => {
   errorText.value = ''
 
-  if (newDates.length === 2 && newDates[0] && newDates[1]) {
-    const diffDays = calculateDiffDays(newDates[0], newDates[1])
+  if (newDates.length >= 1 && newDates[0]) {
+    const diffDays = newDates[1] ? calculateDiffDays(newDates[0], newDates[1]) : 1
 
-    if (selectedLeaveType.value === LeaveType.SICK_LEAVE && diffDays > 7) {
-      errorText.value = ErrorType.SICK_ERROR
+    if (selectedLeaveType.value === LeaveType.SICK_LEAVE) {
+      const usedDays = usedSickDays.value
+      const remainingSickDays = totalSickDays - usedDays
+
+      if ((usedDays >= totalSickDays && diffDays > 1) || diffDays > remainingSickDays) {
+        errorText.value = ErrorType.SICK_ERROR
+      }
     } else if (
       selectedLeaveType.value === LeaveType.ANNUAL_LEAVE &&
+      newDates[1] &&
       includesWeekend(newDates[0], newDates[1])
     ) {
       errorText.value = ErrorType.ANNUAL_ERROR
