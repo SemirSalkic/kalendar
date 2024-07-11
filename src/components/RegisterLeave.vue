@@ -17,7 +17,7 @@ function calculateDiffDays(startDate: Date, endDate: Date): number {
   return Math.ceil(diffTime / MILLISECONDS_PER_DAY) + 1
 }
 
-const includesWeekend = (startDate: Date, endDate: Date) => {
+function checkIfIncludesWeekend(startDate: Date, endDate: Date): boolean {
   let currentDate = new Date(startDate)
   while (currentDate <= endDate) {
     if ([0, 6].includes(currentDate.getDay())) return true
@@ -45,7 +45,7 @@ watch(dates, (newDates) => {
     } else if (
       selectedLeaveType.value === LeaveType.ANNUAL_LEAVE &&
       newDates[1] &&
-      includesWeekend(newDates[0], newDates[1])
+      checkIfIncludesWeekend(newDates[0], newDates[1])
     ) {
       errorText.value = ErrorType.ANNUAL_ERROR
     }
