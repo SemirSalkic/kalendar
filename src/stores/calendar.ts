@@ -33,15 +33,25 @@ export const useCalendarStore = defineStore('calendar', () => {
     })
   }
 
-  function generateCalendarDays(): Calendar[] {
-    const startDay = new Date(
-      today.value.getFullYear(),
-      today.value.getMonth(),
-      1
-    )
+  function generateCalendarDays(): void {
+    const currentYear = today.value.getFullYear()
+    const currentMonth = today.value.getMonth()
+    const startDay = new Date(currentYear, currentMonth, 1)
+
     const daysInMonth: Calendar[] = []
 
-    while (startDay.getMonth() === today.value.getMonth()) {
+    // Add padding for days before the first day of the month
+    const firstDayOfWeek = (startDay.getDay() + 6) % 7 // Adjust to make Monday the first day of the week
+
+    daysInMonth.push(
+      ...Array.from({ length: firstDayOfWeek }, () => ({
+        day: undefined,
+        date: '',
+        isWeekend: false
+      }))
+    )
+
+    while (startDay.getMonth() === currentMonth) {
       daysInMonth.push({
         day: startDay.getDate(),
         date: formatDate(startDay),
@@ -51,7 +61,6 @@ export const useCalendarStore = defineStore('calendar', () => {
     }
 
     calendarDays.value = daysInMonth
-    return daysInMonth
   }
 
   function addLeaveTypeToCalendar(dates: Date[], leaveType: LeaveType) {

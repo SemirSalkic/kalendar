@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  day: number
+  day: number | undefined
   isWeekend: boolean
   description?: string
 }>()
