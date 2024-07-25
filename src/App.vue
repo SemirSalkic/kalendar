@@ -10,7 +10,7 @@ const isDialogOpen = ref(false)
     <div class="p-2 text-end">
       <VSwitch v-model="isDark"></VSwitch>
     </div>
-    <div class="h-full place-content-center overflow-auto md:self-center">
+    <div class="flex h-full overflow-auto md:justify-center">
       <div class="min-w-[600px] self-center rounded-xl border-2 p-4">
         <div class="mb-4 flex w-full items-center justify-between">
           <TitleComponent title="Kalendar"></TitleComponent>
