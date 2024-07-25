@@ -32,7 +32,7 @@ const basic = computed(() => !props.color)
 <template>
   <button
     :type="type"
-    class="inline-flex justify-center rounded-full px-4 py-2 font-medium shadow-md transition focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 disabled:pointer-events-none disabled:opacity-50"
+    class="inline-flex justify-center rounded-full px-4 py-2 text-sm font-medium shadow-md transition focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 disabled:pointer-events-none disabled:opacity-50 md:text-base"
     :class="[
       {
         'border-green-700 bg-green-600 text-white hover:bg-green-500 active:bg-green-600':

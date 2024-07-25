@@ -5,14 +5,14 @@ const isDialogOpen = ref(false)
 
 <template>
   <main
-    class="relative h-full bg-white p-2 text-black dark:bg-black dark:text-white md:p-8"
+    class="flex h-dvh flex-col bg-white p-2 text-black dark:bg-black dark:text-white md:p-8"
   >
-    <div class="absolute right-0 top-0 p-4">
+    <div class="p-2 text-end">
       <VSwitch v-model="isDark"></VSwitch>
     </div>
-    <div class="flex h-full flex-col items-center justify-center">
-      <div class="flex flex-col items-center rounded-xl border-2 p-4">
-        <div class="mb-4 flex w-full justify-between">
+    <div class="h-full place-content-center overflow-auto md:self-center">
+      <div class="min-w-[600px] self-center rounded-xl border-2 p-4">
+        <div class="mb-4 flex w-full items-center justify-between">
           <TitleComponent title="Kalendar"></TitleComponent>
           <VButton
             class="self-center rounded-md"
@@ -24,7 +24,7 @@ const isDialogOpen = ref(false)
         <CalendarView></CalendarView>
       </div>
     </div>
-    <VDialog v-model="isDialogOpen" class="max-w-5xl gap-4 px-4 py-6">
+    <VDialog v-model="isDialogOpen" class="max-w-5xl px-4 py-6">
       <RegisterLeave @cancel="isDialogOpen = false"></RegisterLeave>
     </VDialog>
   </main>
