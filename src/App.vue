@@ -5,7 +5,7 @@ const isDialogOpen = ref(false)
 
 <template>
   <main
-    class="flex h-dvh flex-col bg-white p-2 text-black dark:bg-black dark:text-white md:p-8"
+    class="flex h-full flex-col bg-white p-2 text-black dark:bg-black dark:text-white md:p-8"
   >
     <div class="p-2 text-end">
       <VSwitch v-model="isDark"></VSwitch>
