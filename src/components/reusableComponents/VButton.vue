@@ -35,25 +35,32 @@ const basic = computed(() => !props.color)
     class="inline-flex justify-center rounded-full px-4 py-2 font-medium shadow-md transition focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 disabled:pointer-events-none disabled:opacity-50"
     :class="[
       {
-        'border-green-700 bg-green-600 text-white hover:bg-green-500 active:bg-green-600': success
+        'border-green-700 bg-green-600 text-white hover:bg-green-500 active:bg-green-600':
+          success
       },
       {
-        'border-red-700 bg-red-600 text-white hover:bg-red-500 active:bg-red-600': error
+        'border-red-700 bg-red-600 text-white hover:bg-red-500 active:bg-red-600':
+          error
       },
       {
-        'border-blue-700 bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-600': warning
+        'border-blue-700 bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-600':
+          warning
       },
       {
-        'border-yellow-700 bg-yellow-600 text-white hover:bg-yellow-500 active:bg-yellow-600': info
+        'border-yellow-700 bg-yellow-600 text-white hover:bg-yellow-500 active:bg-yellow-600':
+          info
       },
       {
-        'border-slate-700 bg-white text-black hover:opacity-70 active:opacity-80': white
+        'border-slate-700 bg-white text-black hover:opacity-70 active:opacity-80':
+          white
       },
       {
-        'border-zinc-900 bg-zinc-800 text-white hover:bg-zinc-700 active:bg-zinc-600': neutral
+        'border-zinc-900 bg-zinc-800 text-white hover:bg-zinc-700 active:bg-zinc-600':
+          neutral
       },
       {
-        'border-indigo-900 bg-indigo-800 text-white hover:bg-indigo-700 active:bg-indigo-800': basic
+        'border-indigo-900 bg-indigo-800 text-white hover:bg-indigo-700 active:bg-indigo-800':
+          basic
       }
     ]"
     :disabled="disabled"

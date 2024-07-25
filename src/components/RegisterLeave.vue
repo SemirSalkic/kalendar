@@ -5,7 +5,8 @@ import '@vuepic/vue-datepicker/dist/main.css'
 
 const isDark = useDark()
 const calendarStore = useCalendarStore()
-const { firstDayOfMonth, lastDayOfMonth, usedSickDays } = storeToRefs(calendarStore)
+const { firstDayOfMonth, lastDayOfMonth, usedSickDays } =
+  storeToRefs(calendarStore)
 const dates = ref<Date[]>([])
 const selectedLeaveType = ref()
 const errorText = ref<string>('')
@@ -35,7 +36,9 @@ watch(dates, (newDates) => {
   errorText.value = ''
 
   if (newDates.length && newDates[0]) {
-    const diffDays = newDates[1] ? calculateDiffDays(newDates[0], newDates[1]) : 1
+    const diffDays = newDates[1]
+      ? calculateDiffDays(newDates[0], newDates[1])
+      : 1
 
     if (
       selectedLeaveType.value === LeaveType.SICK_LEAVE &&
@@ -62,14 +65,19 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center p-2 text-black dark:text-white gap-4">
-    <TitleComponent title="Registrovanje odsustva" class="mb-6"></TitleComponent>
+  <div
+    class="flex flex-col items-center justify-center gap-4 p-2 text-black dark:text-white"
+  >
+    <TitleComponent
+      title="Registrovanje odsustva"
+      class="mb-6"
+    ></TitleComponent>
     <div class="flex items-center gap-2">
       <label class="pl-1 text-left" for="leaveType"> Vrsta odsustva: </label>
       <VDropdown
         id="leaveType"
         name="leaveType"
-        class="w-44 h-10"
+        class="h-10 w-44"
         :list="[LeaveType.ANNUAL_LEAVE, LeaveType.SICK_LEAVE, LeaveType.EMPTY]"
         :pre-select="true"
         @selected="(_, type) => (selectedLeaveType = type)"
@@ -84,7 +92,9 @@ const emit = defineEmits<{
           v-model="dates"
           :enable-time-picker="false"
           :dark="isDark"
-          :disabled-week-days="selectedLeaveType === LeaveType.ANNUAL_LEAVE ? [0, 6] : []"
+          :disabled-week-days="
+            selectedLeaveType === LeaveType.ANNUAL_LEAVE ? [0, 6] : []
+          "
           :min-date="firstDayOfMonth"
           :max-date="lastDayOfMonth"
           disable-month-year-select
@@ -94,7 +104,7 @@ const emit = defineEmits<{
         <ErrorText v-if="errorText" :error-text="errorText"></ErrorText>
       </div>
     </div>
-    <div class="flex gap-4 mt-6">
+    <div class="mt-6 flex gap-4">
       <VButton
         class="w-24 self-center rounded-md"
         color="success"

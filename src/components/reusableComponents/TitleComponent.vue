@@ -10,5 +10,7 @@ withDefaults(
 </script>
 
 <template>
-  <span class="text-black font-bold md:text-3xl sm:text-lg dark:text-white">{{ title }}</span>
+  <span class="font-bold text-black dark:text-white sm:text-lg md:text-3xl">{{
+    title
+  }}</span>
 </template>

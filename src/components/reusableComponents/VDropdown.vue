@@ -62,7 +62,7 @@ watch(
       <MenuButton
         v-bind="$attrs"
         :disabled="disabled"
-        class="flex items-center justify-between rounded-md border-2 dark:border-zinc-800 dark:text-white bg-white dark:bg-zinc-800 px-2 text-sm font-medium text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 focus-visible:ring-opacity-75 hover:ring-1 hover:ring-gray-400"
+        class="flex items-center justify-between rounded-md border-2 bg-white px-2 text-sm font-medium text-black hover:ring-1 hover:ring-gray-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 focus-visible:ring-opacity-75 dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
         :class="{ 'text-gray-400': disabled }"
       >
         <div v-if="!label">
@@ -74,8 +74,12 @@ watch(
         <div v-else class="font-medium">
           {{ label }}
         </div>
-        <ChevronDownIcon v-if="!open" class="ml-1 -mr-1 h-4 w-4" aria-hidden="true" />
-        <ChevronUpIcon v-else class="ml-1 -mr-1 h-4 w-4" aria-hidden="true" />
+        <ChevronDownIcon
+          v-if="!open"
+          class="-mr-1 ml-1 h-4 w-4"
+          aria-hidden="true"
+        />
+        <ChevronUpIcon v-else class="-mr-1 ml-1 h-4 w-4" aria-hidden="true" />
       </MenuButton>
       <transition
         enter-active-class="transform transition duration-500 ease-custom"
@@ -87,7 +91,7 @@ watch(
       >
         <MenuItems
           v-show="open"
-          class="absolute z-50 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md dark:bg-zinc-800 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="absolute z-50 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-zinc-800"
         >
           <div>
             <MenuItem
@@ -99,8 +103,10 @@ watch(
             >
               <button
                 :class="[
-                  'group flex w-full items-center rounded-md px-2 py-2 text-sm ',
-                  active ? 'bg-zinc-700 text-white' : 'text-black dark:text-white'
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                  active
+                    ? 'bg-zinc-700 text-white'
+                    : 'text-black dark:text-white'
                 ]"
               >
                 <p>

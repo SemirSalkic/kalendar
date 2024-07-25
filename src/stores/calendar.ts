@@ -6,14 +6,19 @@ export const useCalendarStore = defineStore('calendar', () => {
   const today = ref(new Date())
   const calendarDays = useLocalStorage<Calendar[]>('calendarDays', [])
 
-  const getFirstDayOfMonth = () => new Date(today.value.getFullYear(), today.value.getMonth(), 1)
-  const getLastDayOfMonth = () => new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
+  const getFirstDayOfMonth = () =>
+    new Date(today.value.getFullYear(), today.value.getMonth(), 1)
+  const getLastDayOfMonth = () =>
+    new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
 
   const firstDayOfMonth = computed(getFirstDayOfMonth)
   const lastDayOfMonth = computed(getLastDayOfMonth)
 
   const usedSickDays = computed(
-    () => calendarDays.value.filter((day) => day.description === LeaveType.SICK_LEAVE).length
+    () =>
+      calendarDays.value.filter(
+        (day) => day.description === LeaveType.SICK_LEAVE
+      ).length
   )
 
   const isTodayInCurrentMonth = computed(() =>
@@ -29,7 +34,11 @@ export const useCalendarStore = defineStore('calendar', () => {
   }
 
   function generateCalendarDays(): Calendar[] {
-    const startDay = new Date(today.value.getFullYear(), today.value.getMonth(), 1)
+    const startDay = new Date(
+      today.value.getFullYear(),
+      today.value.getMonth(),
+      1
+    )
     const daysInMonth: Calendar[] = []
 
     while (startDay.getMonth() === today.value.getMonth()) {
@@ -46,16 +55,28 @@ export const useCalendarStore = defineStore('calendar', () => {
   }
 
   function addLeaveTypeToCalendar(dates: Date[], leaveType: LeaveType) {
-    const [startDate, endDate] = dates.length === 1 ? [dates[0], dates[0]] : [dates[0], dates[1]]
-    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())
+    const [startDate, endDate] =
+      dates.length === 1 ? [dates[0], dates[0]] : [dates[0], dates[1]]
+    const start = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    )
     const end = endDate
       ? new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())
       : start
 
     calendarDays.value = calendarDays.value.map((day) => {
-      const dayDate = new Date(today.value.getFullYear(), today.value.getMonth(), day.day)
+      const dayDate = new Date(
+        today.value.getFullYear(),
+        today.value.getMonth(),
+        day.day
+      )
       if (dayDate >= start && dayDate <= end) {
-        return { ...day, description: leaveType !== LeaveType.EMPTY ? leaveType : '' }
+        return {
+          ...day,
+          description: leaveType !== LeaveType.EMPTY ? leaveType : ''
+        }
       }
       return day
     })

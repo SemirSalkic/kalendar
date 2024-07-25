@@ -15,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-7 gap-2 md:gap-4 py-4">
+  <div class="grid grid-cols-7 gap-2 md:gap-4">
     <CalendarCard
       v-for="day in calendarDays"
       :key="day.day"

@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { TransitionRoot, TransitionChild, Dialog, DialogPanel } from '@headlessui/vue'
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel
+} from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 
 defineOptions({
@@ -52,7 +57,9 @@ const emit = defineEmits<{
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4 text-center">
+        <div
+          class="flex min-h-full items-center justify-center p-4 text-center"
+        >
           <TransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -66,7 +73,10 @@ const emit = defineEmits<{
               class="relative min-w-[200px] transform rounded-2xl bg-white p-3 text-left align-middle shadow-xl transition-all dark:bg-neutral-900 sm:min-w-[450px]"
               v-bind="$attrs"
             >
-              <div v-if="!static" class="absolute right-1 top-1 z-10 dark:text-white">
+              <div
+                v-if="!static"
+                class="absolute right-1 top-1 z-10 dark:text-white"
+              >
                 <VButtonIcon @click="showDialog = false">
                   <XMarkIcon class="h-5 w-5"></XMarkIcon>
                 </VButtonIcon>
