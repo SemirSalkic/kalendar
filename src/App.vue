@@ -7,7 +7,8 @@ const isDialogOpen = ref(false)
   <main
     class="flex h-full flex-col bg-white p-2 text-black dark:bg-black dark:text-white md:p-8"
   >
-    <div class="p-2 text-end">
+    <div class="flex items-center self-end p-2">
+      <span class="mr-2">Dark mode:</span>
       <VSwitch v-model="isDark"></VSwitch>
     </div>
     <div class="flex h-full overflow-auto md:justify-center">
