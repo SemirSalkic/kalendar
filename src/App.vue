@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const isDark = useDark()
 const isDialogOpen = ref(false)
-const categories = Object.values(Categories)
+const tabGroupList = Object.values(TabGroupType)
+const RegisterCategoriesList = Object.values(Categories)
 </script>
 
 <template>
@@ -13,22 +14,34 @@ const categories = Object.values(Categories)
       <VSwitch v-model="isDark"></VSwitch>
     </div>
     <div class="flex h-full overflow-auto md:justify-center">
-      <div class="min-w-[720px] self-center rounded-xl border-2 p-4">
-        <div class="mb-4 flex w-full items-center justify-between">
-          <TitleComponent title="Kalendar"></TitleComponent>
-          <VButton
-            class="self-center rounded-md"
-            color="neutral"
-            label="Registruj odsustvo"
-            @click="isDialogOpen = true"
-          ></VButton>
-        </div>
-        <CalendarView></CalendarView>
-      </div>
+      <VTabGroup :list="tabGroupList">
+        <template v-slot:[TabGroupType.CALENDAR]>
+          <div class="min-w-[720px] self-center rounded-xl border-2 p-4">
+            <div class="mb-4 flex w-full items-center justify-between">
+              <TitleComponent title="Kalendar"></TitleComponent>
+              <VButton
+                class="self-center rounded-md"
+                color="neutral"
+                label="Registruj odsustvo"
+                @click="isDialogOpen = true"
+              ></VButton>
+            </div>
+            <CalendarView></CalendarView>
+          </div>
+        </template>
+        <template v-slot:[TabGroupType.REQUESTS]>
+          <div class="min-w-[720px] self-center rounded-xl border-2 p-4">
+            <div class="mb-4 flex w-full items-center justify-between">
+              <TitleComponent title="Odsustva"></TitleComponent>
+            </div>
+            // This is a placeholder for the requests component
+          </div>
+        </template>
+      </VTabGroup>
     </div>
     <VDialog v-model="isDialogOpen" class="min-w-[720px] px-4 py-6">
       <div class="w-full pt-2">
-        <VTabGroup :list="categories">
+        <VTabGroup :list="RegisterCategoriesList">
           <template v-slot:[Categories.LEAVE]>
             <RegisterLeave @cancel="isDialogOpen = false"></RegisterLeave>
           </template>

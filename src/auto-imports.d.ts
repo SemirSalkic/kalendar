@@ -13,6 +13,7 @@ declare global {
   const LeaveType: typeof import('./stores/types')['LeaveType']
   const PaymentMethod: typeof import('./stores/types')['PaymentMethod']
   const RatePerKilometer: typeof import('./stores/types')['RatePerKilometer']
+  const TabGroupType: typeof import('./stores/types')['TabGroupType']
   const TravelPurpose: typeof import('./stores/types')['TravelPurpose']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
@@ -304,7 +305,7 @@ declare global {
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { LeaveType, ErrorType, Categories, TravelPurpose, Currency, PaymentMethod, Country } from './stores/types'
+  export type { TabGroupType, LeaveType, ErrorType, Categories, TravelPurpose, Currency, PaymentMethod, Country } from './stores/types'
   import('./stores/types')
 }
 // for vue template auto import
@@ -319,6 +320,7 @@ declare module 'vue' {
     readonly ErrorType: UnwrapRef<typeof import('./stores/types')['ErrorType']>
     readonly LeaveType: UnwrapRef<typeof import('./stores/types')['LeaveType']>
     readonly PaymentMethod: UnwrapRef<typeof import('./stores/types')['PaymentMethod']>
+    readonly TabGroupType: UnwrapRef<typeof import('./stores/types')['TabGroupType']>
     readonly TravelPurpose: UnwrapRef<typeof import('./stores/types')['TravelPurpose']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -613,6 +615,7 @@ declare module '@vue/runtime-core' {
     readonly ErrorType: UnwrapRef<typeof import('./stores/types')['ErrorType']>
     readonly LeaveType: UnwrapRef<typeof import('./stores/types')['LeaveType']>
     readonly PaymentMethod: UnwrapRef<typeof import('./stores/types')['PaymentMethod']>
+    readonly TabGroupType: UnwrapRef<typeof import('./stores/types')['TabGroupType']>
     readonly TravelPurpose: UnwrapRef<typeof import('./stores/types')['TravelPurpose']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>

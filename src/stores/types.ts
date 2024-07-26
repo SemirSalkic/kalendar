@@ -18,6 +18,11 @@ export interface RangeConfig {
   autoRange?: string | number
 }
 
+export enum TabGroupType {
+  CALENDAR = 'Kalendar',
+  REQUESTS = 'Zahtjevi'
+}
+
 export enum LeaveType {
   ANNUAL_LEAVE = 'Godisnji odmor',
   SICK_LEAVE = 'Bolovanje',
