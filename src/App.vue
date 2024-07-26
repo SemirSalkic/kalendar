@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Categories } from './stores/types'
-
 const isDark = useDark()
 const isDialogOpen = ref(false)
 const categories = Object.values(Categories)

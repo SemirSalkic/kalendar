@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import CalendarCard from './CalendarCard.vue'
-import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useCalendarStore } from '@/stores/calendar'
 
 const calendarStore = useCalendarStore()
 const { calendarDays, isTodayInCurrentMonth } = storeToRefs(calendarStore)

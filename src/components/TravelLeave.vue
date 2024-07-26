@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  Country,
-  Currency,
-  PaymentMethod,
-  TravelPurpose,
-  type TravelEntry,
-  type RatePerKilometer
-} from '@/stores/types'
+import { type TravelEntry, type RatePerKilometer } from '@/stores/types'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { storeToRefs } from 'pinia'
