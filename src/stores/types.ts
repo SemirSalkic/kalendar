@@ -65,6 +65,8 @@ export enum Country {
   Other = 'Ostalo'
 }
 
+export type RatePerKilometer = 1.5 | 1.75 | 1.88 | 2.25 | 2.65 | 2.88
+
 export interface TravelEntry {
   travelEntryId?: string
   travelDetails: TravelDetails
@@ -98,7 +100,7 @@ export interface AdvancePayment {
 
 export interface TravelExpense {
   transportCosts: TransportCost[]
-  ownCarUsage?: OwnCarUsage // Optional, only if own car is used
+  ownCarUsage: OwnCarUsage
   accommodationCosts: AccommodationCost[]
   otherCosts: OtherCost[]
   isMealProvided: boolean // true if three meals are provided
@@ -112,10 +114,9 @@ export interface TransportCost {
 }
 
 export interface OwnCarUsage {
-  kilometersDriven?: number
-  ratePerKilometer?: number // Dropdown list with predefined rates 0.5 | 0.75 | 1.0 | 1.25 | 1.5 | 1.88
-  // TODO: Define better type for ratePerKilometer
-  totalAmount?: number // in KM
+  kilometersDriven: number
+  ratePerKilometer: RatePerKilometer
+  totalAmount: number // in KM
 }
 
 export interface AccommodationCost {

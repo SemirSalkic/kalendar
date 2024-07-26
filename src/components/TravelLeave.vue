@@ -4,7 +4,8 @@ import {
   Currency,
   PaymentMethod,
   TravelPurpose,
-  type TravelEntry
+  type TravelEntry,
+  type RatePerKilometer
 } from '@/stores/types'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -17,6 +18,15 @@ const props = defineProps<{
 const isDark = useDark()
 const calendarStore = useCalendarStore()
 const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(calendarStore)
+
+const rates: { label: string; value: RatePerKilometer }[] = [
+  { label: '1.50 KM x 15%', value: 1.5 },
+  { label: '1.75 KM x 15%', value: 1.75 },
+  { label: '1.88 KM x 15%', value: 1.88 },
+  { label: '2.25 KM x 15%', value: 2.25 },
+  { label: '2.65 KM x 15%', value: 2.65 },
+  { label: '2.88 KM x 15%', value: 2.88 }
+]
 
 const transportCostsDefault = {
   transportMeans: '',
@@ -64,9 +74,9 @@ const state = ref<TravelEntry>({
   travelExpense: {
     transportCosts: [{ ...transportCostsDefault }],
     ownCarUsage: {
-      kilometersDriven: undefined,
-      ratePerKilometer: undefined,
-      totalAmount: undefined
+      kilometersDriven: 0,
+      ratePerKilometer: 1.88,
+      totalAmount: 0
     },
     accommodationCosts: [
       {
@@ -436,6 +446,58 @@ const emit = defineEmits<{
           label="Dodaj red"
           @click="addTransportCost"
         ></VButton>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span
+          >U slučaju da ste koristili vlastiti automobil popunite pređene
+          kilometre</span
+        >
+        <div class="flex gap-2">
+          <VInput
+            id="transportAmount"
+            name="transportAmount"
+            v-model="state.travelExpense.ownCarUsage.kilometersDriven"
+            class="h-9 w-24"
+            placeholder="Unesite iznos"
+            type="number"
+            :min-number="0"
+            @update:model-value="
+              state.travelExpense.ownCarUsage.totalAmount =
+                state.travelExpense.ownCarUsage.kilometersDriven *
+                (state.travelExpense.ownCarUsage.ratePerKilometer * 0.15)
+            "
+          ></VInput>
+          <VDropdown
+            id="currency"
+            name="currency"
+            class="h-9 w-32"
+            :list="rates.map((rate) => rate.label)"
+            :selected="
+              rates.find(
+                (rate) =>
+                  rate.value ===
+                  state.travelExpense.ownCarUsage.ratePerKilometer
+              )?.label
+            "
+            @selected="
+              (index) => {
+                state.travelExpense.ownCarUsage.ratePerKilometer =
+                  rates[index].value
+                state.travelExpense.ownCarUsage.totalAmount =
+                  state.travelExpense.ownCarUsage.kilometersDriven *
+                  (state.travelExpense.ownCarUsage.ratePerKilometer * 0.15)
+              }
+            "
+          ></VDropdown>
+          <span
+            id="transportTotalAmount"
+            name="transportTotalAmount"
+            class="h-9 w-full place-content-center"
+            disabled
+            >Ukupno KM:
+            {{ state.travelExpense.ownCarUsage.totalAmount.toFixed(2) }}</span
+          >
+        </div>
       </div>
     </VDisclosure>
 

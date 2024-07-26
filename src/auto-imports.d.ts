@@ -12,6 +12,7 @@ declare global {
   const ErrorType: typeof import('./stores/types')['ErrorType']
   const LeaveType: typeof import('./stores/types')['LeaveType']
   const PaymentMethod: typeof import('./stores/types')['PaymentMethod']
+  const RatePerKilometer: typeof import('./stores/types')['RatePerKilometer']
   const TravelPurpose: typeof import('./stores/types')['TravelPurpose']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
