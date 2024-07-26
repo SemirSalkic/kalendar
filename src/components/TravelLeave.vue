@@ -18,12 +18,34 @@ const isDark = useDark()
 const calendarStore = useCalendarStore()
 const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(calendarStore)
 
+const transportCostsDefault = {
+  transportMeans: '',
+  amount: 0,
+  quantity: 0,
+  totalAmount: 0
+}
+
+const accommodationCostsDefault = {
+  accommodationType: '',
+  amountPerNight: 0,
+  numberOfNights: 0,
+  totalAmount: 0
+}
+
+const otherCostsDefault = {
+  costName: '',
+  amount: 0,
+  quantity: 0,
+  totalAmount: 0
+}
+
 const state = ref<TravelEntry>({
   advancePayment: {
     amount: 0,
     currency: Currency.KM,
+    paymentMethod: PaymentMethod.Card,
     paymentDate: undefined,
-    paymentMethod: PaymentMethod.Card
+    notes: ''
   },
   travelDetails: {
     purpose: TravelPurpose.WorkMeeting,
@@ -40,17 +62,51 @@ const state = ref<TravelEntry>({
     additionalInformation: ''
   },
   travelExpense: {
-    transportCosts: [],
+    transportCosts: [{ ...transportCostsDefault }],
     ownCarUsage: {
       kilometersDriven: undefined,
       ratePerKilometer: undefined,
       totalAmount: undefined
     },
-    accommodationCosts: [],
-    otherCosts: [],
+    accommodationCosts: [
+      {
+        ...accommodationCostsDefault
+      }
+    ],
+    otherCosts: [
+      {
+        ...otherCostsDefault
+      }
+    ],
     isMealProvided: false
   }
 })
+
+function addTransportCost() {
+  state.value.travelExpense.transportCosts.push({ ...transportCostsDefault })
+}
+
+function removeTransportCost(index: number) {
+  state.value.travelExpense.transportCosts.splice(index, 1)
+}
+
+function addAccommodationCost() {
+  state.value.travelExpense.accommodationCosts.push({
+    ...accommodationCostsDefault
+  })
+}
+
+function removeAccommodationCost(index: number) {
+  state.value.travelExpense.accommodationCosts.splice(index, 1)
+}
+
+function addOtherCost() {
+  state.value.travelExpense.otherCosts.push({ ...otherCostsDefault })
+}
+
+function removeOtherCost(index: number) {
+  state.value.travelExpense.otherCosts.splice(index, 1)
+}
 
 function saveTravelEntry() {
   console.log(state.value)
@@ -247,6 +303,7 @@ const emit = defineEmits<{
             class="h-9 w-32"
             placeholder="Unesite iznos"
             type="number"
+            :min-number="0"
           ></VInput>
         </div>
         <div class="flex flex-col">
@@ -304,6 +361,250 @@ const emit = defineEmits<{
           class="h-9 rounded-md border-2 bg-white px-2 text-black hover:ring-1 hover:ring-gray-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
           placeholder="Unesite napomenu"
         ></textarea>
+      </div>
+    </VDisclosure>
+
+    <VDisclosure title="Troškovi prevoza">
+      <div class="flex flex-col gap-4">
+        <div
+          v-for="(cost, index) in state.travelExpense.transportCosts"
+          :key="index"
+          class="flex w-full items-center gap-2"
+        >
+          <div class="flex flex-col">
+            <label for="transportMeans">Prevozno sredstvo:</label>
+            <VInput
+              id="transportMeans"
+              name="transportMeans"
+              v-model="cost.transportMeans"
+              class="h-9 w-full"
+              placeholder="Unesite naziv prevoza"
+              type="text"
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="transportQuantity">Količina:</label>
+            <VInput
+              id="transportQuantity"
+              name="transportQuantity"
+              v-model="cost.quantity"
+              class="h-9 w-24"
+              placeholder="Unesite količinu"
+              type="number"
+              :min-number="0"
+              @update:model-value="
+                cost.totalAmount = cost.amount * cost.quantity
+              "
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="transportAmount">Iznos KM:</label>
+            <VInput
+              id="transportAmount"
+              name="transportAmount"
+              v-model="cost.amount"
+              class="h-9 w-24"
+              placeholder="Unesite iznos"
+              type="number"
+              :min-number="0"
+              @update:model-value="
+                cost.totalAmount = cost.amount * cost.quantity
+              "
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="transportTotalAmount">Ukupno KM:</label>
+            <span
+              id="transportTotalAmount"
+              name="transportTotalAmount"
+              class="h-9 w-24 place-content-center"
+              disabled
+              >{{ cost.totalAmount }}</span
+            >
+          </div>
+          <VButton
+            v-if="state.travelExpense.transportCosts.length > 1"
+            class="h-9 w-24 rounded-md"
+            color="error"
+            label="Ukloni"
+            @click="removeTransportCost(index)"
+          ></VButton>
+        </div>
+        <VButton
+          class="w-32 rounded-md"
+          color="success"
+          label="Dodaj red"
+          @click="addTransportCost"
+        ></VButton>
+      </div>
+    </VDisclosure>
+
+    <VDisclosure title="Izdaci za noćenje">
+      <div class="flex flex-col gap-4">
+        <div
+          v-for="(cost, index) in state.travelExpense.accommodationCosts"
+          :key="index"
+          class="flex w-full items-center gap-2"
+        >
+          <div class="flex flex-col">
+            <label for="accommodationType">Vrsta smještaja:</label>
+            <VInput
+              id="accommodationType"
+              name="accommodationType"
+              v-model="cost.accommodationType"
+              class="h-9 w-full"
+              placeholder="Unesite naziv"
+              type="text"
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="numberOfNights">Broj noćenja:</label>
+            <VInput
+              id="numberOfNights"
+              name="numberOfNights"
+              v-model="cost.numberOfNights"
+              class="h-9 w-24"
+              placeholder="Unesite količinu"
+              type="number"
+              :min-number="0"
+              @update:model-value="
+                cost.totalAmount = cost.numberOfNights * cost.amountPerNight
+              "
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="amountPerNight">Iznos KM:</label>
+            <VInput
+              id="amountPerNight"
+              name="amountPerNight"
+              v-model="cost.amountPerNight"
+              class="h-9 w-24"
+              placeholder="Unesite iznos"
+              type="number"
+              :min-number="0"
+              @update:model-value="
+                cost.totalAmount = cost.numberOfNights * cost.amountPerNight
+              "
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="accommodationTotalAmount">Ukupno KM:</label>
+            <span
+              id="accommodationTotalAmount"
+              name="accommodationTotalAmount"
+              class="h-9 w-24 place-content-center"
+              disabled
+              >{{ cost.totalAmount }}</span
+            >
+          </div>
+          <VButton
+            v-if="state.travelExpense.accommodationCosts.length > 1"
+            class="h-9 w-24 rounded-md"
+            color="error"
+            label="Ukloni"
+            @click="removeAccommodationCost(index)"
+          ></VButton>
+        </div>
+        <VButton
+          class="w-32 rounded-md"
+          color="success"
+          label="Dodaj red"
+          @click="addAccommodationCost"
+        ></VButton>
+      </div>
+    </VDisclosure>
+
+    <VDisclosure title="Ostali troskovi">
+      <div class="flex flex-col gap-4">
+        <div
+          v-for="(cost, index) in state.travelExpense.otherCosts"
+          :key="index"
+          class="flex w-full items-center gap-2"
+        >
+          <div class="flex flex-col">
+            <label for="otherCostType">Naziv troška:</label>
+            <VInput
+              id="otherCostType"
+              name="otherCostType"
+              v-model="cost.costName"
+              class="h-9 w-full"
+              placeholder="Unesite naziv"
+              type="text"
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="otherCostQuantity">Količina:</label>
+            <VInput
+              id="otherCostQuantity"
+              name="otherCostQuantity"
+              v-model="cost.quantity"
+              class="h-9 w-24"
+              placeholder="Unesite količinu"
+              type="number"
+              :min-number="0"
+              @update:model-value="
+                cost.totalAmount = cost.quantity * cost.amount
+              "
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="otherCostAmount">Iznos KM:</label>
+            <VInput
+              id="otherCostAmount"
+              name="otherCostAmount"
+              v-model="cost.amount"
+              class="h-9 w-24"
+              placeholder="Unesite iznos"
+              type="number"
+              :min-number="0"
+              @update:model-value="
+                cost.totalAmount = cost.quantity * cost.amount
+              "
+            ></VInput>
+          </div>
+          <div class="flex flex-col">
+            <label for="otherCostTotalAmount">Ukupno KM:</label>
+            <span
+              id="otherCostTotalAmount"
+              name="otherCostTotalAmount"
+              class="h-9 w-24 place-content-center"
+              disabled
+              >{{ cost.totalAmount }}</span
+            >
+          </div>
+          <VButton
+            v-if="state.travelExpense.otherCosts.length > 1"
+            class="h-9 w-24 rounded-md"
+            color="error"
+            label="Ukloni"
+            @click="removeOtherCost(index)"
+          ></VButton>
+        </div>
+        <VButton
+          class="w-32 rounded-md"
+          color="success"
+          label="Dodaj red"
+          @click="addOtherCost"
+        ></VButton>
+      </div>
+    </VDisclosure>
+
+    <VDisclosure
+      title="Da li je bila osigurana ishrana tokom puta (tri obroka)"
+    >
+      <div class="flex gap-2">
+        <VButton
+          class="w-24 self-center rounded-md"
+          :color="state.travelExpense.isMealProvided ? 'success' : 'neutral'"
+          label="Da"
+          @click="state.travelExpense.isMealProvided = true"
+        ></VButton>
+        <VButton
+          class="w-24 self-center rounded-md"
+          :color="!state.travelExpense.isMealProvided ? 'error' : 'neutral'"
+          label="Ne"
+          @click="state.travelExpense.isMealProvided = false"
+        ></VButton>
       </div>
     </VDisclosure>
 
