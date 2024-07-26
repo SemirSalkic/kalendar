@@ -12,6 +12,8 @@ const props = defineProps<{
 const isDark = useDark()
 const calendarStore = useCalendarStore()
 const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(calendarStore)
+const leaveRequestStore = useLeaveRequestStore()
+const timestamp = useTimestamp({ offset: 30 })
 
 const rates: { label: string; value: RatePerKilometer }[] = [
   { label: '1.50 KM x 15%', value: 1.5 },
@@ -44,6 +46,8 @@ const otherCostsDefault = {
 }
 
 const state = ref<TravelEntry>({
+  travelEntryStatus: TravelEntryStatus.Pending,
+  datesUpdated: [],
   employeeNames: {
     registeredByFirstName: '',
     registeredByLastName: '',
@@ -109,12 +113,31 @@ function removeOtherCost(index: number) {
 }
 
 function saveTravelEntry() {
-  console.log(state.value)
+  if (props.travelEntryId) {
+    state.value.datesUpdated?.push(new Date())
+    leaveRequestStore.updateTravelEntry(state.value)
+  } else {
+    state.value.travelEntryId = 'BR-N' + timestamp.value
+    state.value.dateCreated = new Date()
+    leaveRequestStore.addTravelEntry(state.value)
+  }
+  emit('cancel')
 }
 
 const emit = defineEmits<{
   (e: 'cancel'): void
 }>()
+
+watch(
+  () => props.travelEntryId,
+  (value) => {
+    state.value =
+      leaveRequestStore.travelEntryList.find(
+        (entry) => entry.travelEntryId === value
+      ) ?? state.value
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
