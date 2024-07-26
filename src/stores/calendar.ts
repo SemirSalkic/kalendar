@@ -8,8 +8,15 @@ export const useCalendarStore = defineStore('calendar', () => {
 
   const getFirstDayOfMonth = () =>
     new Date(today.value.getFullYear(), today.value.getMonth(), 1)
-  const getLastDayOfMonth = () =>
-    new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0)
+  const getLastDayOfMonth = () => {
+    const lastDay = new Date(
+      today.value.getFullYear(),
+      today.value.getMonth() + 1,
+      0
+    )
+    lastDay.setHours(23, 59, 59, 999)
+    return lastDay
+  }
 
   const firstDayOfMonth = computed(getFirstDayOfMonth)
   const lastDayOfMonth = computed(getLastDayOfMonth)
