@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/24/solid'
+import { ChevronDownIcon } from '@heroicons/vue/24/solid'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 defineOptions({
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<VDropdownProps>(), {
 })
 
 onMounted(() => {
-  if (props.preSelect && props.list.length) {
+  if (props.preSelect && props.list.length && !props.selected) {
     selectedRef.value = props.list[0]
     emit('selected', 0, props.list[0])
   }
