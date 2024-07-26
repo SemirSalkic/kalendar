@@ -67,7 +67,9 @@ const categories = Object.values(Categories)
               <div v-if="category === Categories.LEAVE">
                 <RegisterLeave @cancel="isDialogOpen = false"></RegisterLeave>
               </div>
-              <div v-else><TravelLeave></TravelLeave></div>
+              <div v-else>
+                <TravelLeave @cancel="isDialogOpen = false"></TravelLeave>
+              </div>
             </TabPanel>
           </TabPanels>
         </TabGroup>
