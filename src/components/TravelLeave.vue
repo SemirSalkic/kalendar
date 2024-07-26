@@ -79,28 +79,20 @@ const state = ref<TravelEntry>({
     additionalInformation: ''
   },
   travelExpense: {
-    transportCosts: [{ ...transportCostsDefault }],
+    transportCosts: [transportCostsDefault],
     ownCarUsage: {
       kilometersDriven: 0,
       ratePerKilometer: 1.88,
       totalAmount: 0
     },
-    accommodationCosts: [
-      {
-        ...accommodationCostsDefault
-      }
-    ],
-    otherCosts: [
-      {
-        ...otherCostsDefault
-      }
-    ],
+    accommodationCosts: [accommodationCostsDefault],
+    otherCosts: [otherCostsDefault],
     isMealProvided: false
   }
 })
 
 function addTransportCost() {
-  state.value.travelExpense.transportCosts.push({ ...transportCostsDefault })
+  state.value.travelExpense.transportCosts.push(transportCostsDefault)
 }
 
 function removeTransportCost(index: number) {
@@ -108,9 +100,7 @@ function removeTransportCost(index: number) {
 }
 
 function addAccommodationCost() {
-  state.value.travelExpense.accommodationCosts.push({
-    ...accommodationCostsDefault
-  })
+  state.value.travelExpense.accommodationCosts.push(accommodationCostsDefault)
 }
 
 function removeAccommodationCost(index: number) {
@@ -118,7 +108,7 @@ function removeAccommodationCost(index: number) {
 }
 
 function addOtherCost() {
-  state.value.travelExpense.otherCosts.push({ ...otherCostsDefault })
+  state.value.travelExpense.otherCosts.push(otherCostsDefault)
 }
 
 function removeOtherCost(index: number) {
@@ -519,7 +509,7 @@ const emit = defineEmits<{
           </div>
           <VButton
             v-if="
-              state.travelExpense.transportCosts.length > 1 || !props.disabled
+              state.travelExpense.transportCosts.length > 1 && !props.disabled
             "
             class="h-9 w-24 rounded-md"
             color="error"
@@ -664,7 +654,7 @@ const emit = defineEmits<{
           </div>
           <VButton
             v-if="
-              state.travelExpense.accommodationCosts.length > 1 ||
+              state.travelExpense.accommodationCosts.length > 1 &&
               !props.disabled
             "
             class="h-9 w-24 rounded-md"
@@ -748,7 +738,7 @@ const emit = defineEmits<{
             >
           </div>
           <VButton
-            v-if="state.travelExpense.otherCosts.length > 1 || !props.disabled"
+            v-if="state.travelExpense.otherCosts.length > 1 && !props.disabled"
             class="h-9 w-24 rounded-md"
             color="error"
             label="Ukloni"
