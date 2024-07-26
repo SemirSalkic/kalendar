@@ -70,10 +70,20 @@ export enum Country {
   Other = 'Ostalo'
 }
 
+export enum TravelEntryStatus {
+  Pending = 'Na Cekanju',
+  Approved = 'Odobreno',
+  SentToBeCorrected = 'Poslano na ispravku',
+  Rejected = 'Odbijeno'
+}
+
 export type RatePerKilometer = 1.5 | 1.75 | 1.88 | 2.25 | 2.65 | 2.88
 
 export interface TravelEntry {
   travelEntryId?: string
+  travelEntryStatus?: TravelEntryStatus
+  dateCreated?: Date
+  datesUpdated?: Date[]
   employeeNames: EmployeeNames
   travelDetails: TravelDetails
   advancePayment: AdvancePayment
