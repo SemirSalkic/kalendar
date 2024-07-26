@@ -50,6 +50,12 @@ const otherCostsDefault = {
 }
 
 const state = ref<TravelEntry>({
+  employeeNames: {
+    registeredByFirstName: '',
+    registeredByLastName: '',
+    registeredEmployeeFirstName: '',
+    registeredEmployeeLastName: ''
+  },
   advancePayment: {
     amount: 0,
     currency: Currency.KM,
@@ -135,6 +141,56 @@ const emit = defineEmits<{
       title="Zahtjev za službeno putovanje"
       class="self-center"
     ></TitleComponent>
+    <span v-if="travelEntryId" class="text-sm">
+      Broj naloga: {{ travelEntryId }}
+    </span>
+
+    <VDisclosure title="Osobni podaci">
+      <div class="flex gap-2">
+        <div class="flex w-full flex-col">
+          <label for="registeredByFirstName">Ime podnosioca:</label>
+          <VInput
+            id="registeredByFirstName"
+            name="registeredByFirstName"
+            v-model="state.employeeNames.registeredByFirstName"
+            class="h-9"
+            placeholder="Unesite ime"
+          ></VInput>
+        </div>
+        <div class="flex w-full flex-col">
+          <label for="registeredByLastName">Prezime podnosioca:</label>
+          <VInput
+            id="registeredByLastName"
+            name="registeredByLastName"
+            v-model="state.employeeNames.registeredByLastName"
+            class="h-9"
+            placeholder="Unesite prezime"
+          ></VInput>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <div class="flex w-full flex-col">
+          <label for="registeredEmployeeFirstName">Ime registrovanog:</label>
+          <VInput
+            id="registeredEmployeeFirstName"
+            name="registeredEmployeeFirstName"
+            v-model="state.employeeNames.registeredEmployeeFirstName"
+            class="h-9"
+            placeholder="Unesite ime"
+          ></VInput>
+        </div>
+        <div class="flex w-full flex-col">
+          <label for="registeredEmployeeLastName">Prezime registrovanog:</label>
+          <VInput
+            id="registeredEmployeeLastName"
+            name="registeredEmployeeLastName"
+            v-model="state.employeeNames.registeredEmployeeLastName"
+            class="h-9"
+            placeholder="Unesite prezime"
+          ></VInput>
+        </div>
+      </div>
+    </VDisclosure>
 
     <VDisclosure title="Odredište putovanja">
       <div class="flex flex-col">
@@ -403,7 +459,9 @@ const emit = defineEmits<{
               type="number"
               :min-number="0"
               @update:model-value="
-                cost.totalAmount = cost.amount * cost.quantity
+                cost.amount && cost.quantity
+                  ? (cost.totalAmount = cost.amount * cost.quantity)
+                  : (cost.totalAmount = 0)
               "
             ></VInput>
           </div>
@@ -418,7 +476,9 @@ const emit = defineEmits<{
               type="number"
               :min-number="0"
               @update:model-value="
-                cost.totalAmount = cost.amount * cost.quantity
+                cost.amount && cost.quantity
+                  ? (cost.totalAmount = cost.amount * cost.quantity)
+                  : (cost.totalAmount = 0)
               "
             ></VInput>
           </div>
@@ -429,7 +489,7 @@ const emit = defineEmits<{
               name="transportTotalAmount"
               class="h-9 w-24 place-content-center"
               disabled
-              >{{ cost.totalAmount }}</span
+              >{{ cost.totalAmount.toFixed(2) }}</span
             >
           </div>
           <VButton
@@ -457,14 +517,16 @@ const emit = defineEmits<{
             id="transportAmount"
             name="transportAmount"
             v-model="state.travelExpense.ownCarUsage.kilometersDriven"
-            class="h-9 w-24"
-            placeholder="Unesite iznos"
+            class="h-9 w-40"
+            placeholder="Unesite kilometre"
             type="number"
             :min-number="0"
             @update:model-value="
-              state.travelExpense.ownCarUsage.totalAmount =
-                state.travelExpense.ownCarUsage.kilometersDriven *
-                (state.travelExpense.ownCarUsage.ratePerKilometer * 0.15)
+              state.travelExpense.ownCarUsage.kilometersDriven
+                ? (state.travelExpense.ownCarUsage.totalAmount =
+                    state.travelExpense.ownCarUsage.kilometersDriven *
+                    (state.travelExpense.ownCarUsage.ratePerKilometer * 0.15))
+                : (state.travelExpense.ownCarUsage.totalAmount = 0)
             "
           ></VInput>
           <VDropdown
@@ -483,9 +545,11 @@ const emit = defineEmits<{
               (index) => {
                 state.travelExpense.ownCarUsage.ratePerKilometer =
                   rates[index].value
-                state.travelExpense.ownCarUsage.totalAmount =
-                  state.travelExpense.ownCarUsage.kilometersDriven *
-                  (state.travelExpense.ownCarUsage.ratePerKilometer * 0.15)
+                state.travelExpense.ownCarUsage.kilometersDriven
+                  ? (state.travelExpense.ownCarUsage.totalAmount =
+                      state.travelExpense.ownCarUsage.kilometersDriven *
+                      (state.travelExpense.ownCarUsage.ratePerKilometer * 0.15))
+                  : (state.travelExpense.ownCarUsage.totalAmount = 0)
               }
             "
           ></VDropdown>
@@ -530,7 +594,10 @@ const emit = defineEmits<{
               type="number"
               :min-number="0"
               @update:model-value="
-                cost.totalAmount = cost.numberOfNights * cost.amountPerNight
+                cost.numberOfNights && cost.amountPerNight
+                  ? (cost.totalAmount =
+                      cost.numberOfNights * cost.amountPerNight)
+                  : (cost.totalAmount = 0)
               "
             ></VInput>
           </div>
@@ -545,7 +612,10 @@ const emit = defineEmits<{
               type="number"
               :min-number="0"
               @update:model-value="
-                cost.totalAmount = cost.numberOfNights * cost.amountPerNight
+                cost.numberOfNights && cost.amountPerNight
+                  ? (cost.totalAmount =
+                      cost.numberOfNights * cost.amountPerNight)
+                  : (cost.totalAmount = 0)
               "
             ></VInput>
           </div>
@@ -556,7 +626,7 @@ const emit = defineEmits<{
               name="accommodationTotalAmount"
               class="h-9 w-24 place-content-center"
               disabled
-              >{{ cost.totalAmount }}</span
+              >{{ cost.totalAmount?.toFixed(2) }}</span
             >
           </div>
           <VButton
@@ -605,7 +675,9 @@ const emit = defineEmits<{
               type="number"
               :min-number="0"
               @update:model-value="
-                cost.totalAmount = cost.quantity * cost.amount
+                cost.quantity && cost.amount
+                  ? (cost.totalAmount = cost.quantity * cost.amount)
+                  : (cost.totalAmount = 0)
               "
             ></VInput>
           </div>
@@ -620,7 +692,9 @@ const emit = defineEmits<{
               type="number"
               :min-number="0"
               @update:model-value="
-                cost.totalAmount = cost.quantity * cost.amount
+                cost.quantity && cost.amount
+                  ? (cost.totalAmount = cost.quantity * cost.amount)
+                  : (cost.totalAmount = 0)
               "
             ></VInput>
           </div>
@@ -631,7 +705,7 @@ const emit = defineEmits<{
               name="otherCostTotalAmount"
               class="h-9 w-24 place-content-center"
               disabled
-              >{{ cost.totalAmount }}</span
+              >{{ cost.totalAmount?.toFixed(2) }}</span
             >
           </div>
           <VButton

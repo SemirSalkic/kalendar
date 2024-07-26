@@ -69,9 +69,17 @@ export type RatePerKilometer = 1.5 | 1.75 | 1.88 | 2.25 | 2.65 | 2.88
 
 export interface TravelEntry {
   travelEntryId?: string
+  employeeNames: EmployeeNames
   travelDetails: TravelDetails
   advancePayment: AdvancePayment
   travelExpense: TravelExpense
+}
+
+export interface EmployeeNames {
+  registeredByFirstName: string
+  registeredByLastName: string
+  registeredEmployeeFirstName: string
+  registeredEmployeeLastName: string
 }
 export interface TravelDetails {
   purpose: TravelPurpose
