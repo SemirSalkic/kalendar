@@ -75,11 +75,9 @@ watch(
           {{ label }}
         </div>
         <ChevronDownIcon
-          v-if="!open"
-          class="-mr-1 ml-1 h-4 w-4"
-          aria-hidden="true"
+          :class="open ? 'rotate-180 transform' : ''"
+          class="h-4 w-4 text-black dark:text-white"
         />
-        <ChevronUpIcon v-else class="-mr-1 ml-1 h-4 w-4" aria-hidden="true" />
       </MenuButton>
       <transition
         enter-active-class="transform transition duration-500 ease-custom"
