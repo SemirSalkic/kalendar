@@ -21,5 +21,6 @@ declare module 'vue' {
     VDropdown: typeof import('./components/reusableComponents/VDropdown.vue')['default']
     VInput: typeof import('./components/reusableComponents/VInput.vue')['default']
     VSwitch: typeof import('./components/reusableComponents/VSwitch.vue')['default']
+    VTabGroup: typeof import('./components/reusableComponents/VTabGroup.vue')['default']
   }
 }
