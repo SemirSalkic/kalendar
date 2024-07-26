@@ -13,10 +13,13 @@ declare module 'vue' {
     ErrorText: typeof import('./components/reusableComponents/ErrorText.vue')['default']
     RegisterLeave: typeof import('./components/RegisterLeave.vue')['default']
     TitleComponent: typeof import('./components/reusableComponents/TitleComponent.vue')['default']
+    TravelLeave: typeof import('./components/TravelLeave.vue')['default']
     VButton: typeof import('./components/reusableComponents/VButton.vue')['default']
     VButtonIcon: typeof import('./components/reusableComponents/VButtonIcon.vue')['default']
     VDialog: typeof import('./components/reusableComponents/VDialog.vue')['default']
+    VDisclosure: typeof import('./components/reusableComponents/VDisclosure.vue')['default']
     VDropdown: typeof import('./components/reusableComponents/VDropdown.vue')['default']
+    VInput: typeof import('./components/reusableComponents/VInput.vue')['default']
     VSwitch: typeof import('./components/reusableComponents/VSwitch.vue')['default']
   }
 }
