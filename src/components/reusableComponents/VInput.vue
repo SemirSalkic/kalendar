@@ -48,7 +48,7 @@ function updateInput(event: Event) {
   const target = event.target as HTMLInputElement
   let val
   if (props.type === 'number') {
-    val = parseInt(target.value)
+    val = parseFloat(target.value)
     if (isNaN(val)) val = undefined
   } else {
     val = target.value
