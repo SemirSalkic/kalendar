@@ -13,6 +13,7 @@ import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   travelEntryId?: string
+  disabled?: boolean
 }>()
 
 const isDark = useDark()
@@ -155,6 +156,7 @@ const emit = defineEmits<{
             v-model="state.employeeNames.registeredByFirstName"
             class="h-9"
             placeholder="Unesite ime"
+            :disabled="props.disabled"
           ></VInput>
         </div>
         <div class="flex w-full flex-col">
@@ -165,6 +167,7 @@ const emit = defineEmits<{
             v-model="state.employeeNames.registeredByLastName"
             class="h-9"
             placeholder="Unesite prezime"
+            :disabled="props.disabled"
           ></VInput>
         </div>
       </div>
@@ -177,6 +180,7 @@ const emit = defineEmits<{
             v-model="state.employeeNames.registeredEmployeeFirstName"
             class="h-9"
             placeholder="Unesite ime"
+            :disabled="props.disabled"
           ></VInput>
         </div>
         <div class="flex w-full flex-col">
@@ -187,6 +191,7 @@ const emit = defineEmits<{
             v-model="state.employeeNames.registeredEmployeeLastName"
             class="h-9"
             placeholder="Unesite prezime"
+            :disabled="props.disabled"
           ></VInput>
         </div>
       </div>
@@ -202,6 +207,7 @@ const emit = defineEmits<{
           class="h-9 w-full"
           :list="Object.values(TravelPurpose)"
           :selected="state.travelDetails.purpose"
+          :disabled="props.disabled"
           @selected="
             (index) =>
               (state.travelDetails.purpose =
@@ -219,6 +225,7 @@ const emit = defineEmits<{
             class="h-9 w-44"
             :list="Object.values(Country)"
             :selected="state.travelDetails.startingCountry"
+            :disabled="props.disabled"
             @selected="
               (index) =>
                 (state.travelDetails.startingCountry =
@@ -234,6 +241,7 @@ const emit = defineEmits<{
             v-model="state.travelDetails.startingCity"
             class="h-9"
             placeholder="Unesite grad"
+            :disabled="props.disabled"
           ></VInput>
         </div>
         <div class="flex flex-col">
@@ -246,6 +254,7 @@ const emit = defineEmits<{
             disable-month-year-select
             :min-date="firstDayOfMonth"
             :max-date="lastDayOfMonth"
+            :disabled="props.disabled"
             @cleared="state.travelDetails.startDateAndTIme = undefined"
           ></VueDatePicker>
         </div>
@@ -261,6 +270,7 @@ const emit = defineEmits<{
             class="h-9 w-44"
             :list="Object.values(Country)"
             :selected="state.travelDetails.destinationCountry"
+            :disabled="props.disabled"
             @selected="
               (index) =>
                 (state.travelDetails.destinationCountry =
@@ -276,6 +286,7 @@ const emit = defineEmits<{
             v-model="state.travelDetails.destinationCity"
             class="h-9"
             placeholder="Unesite grad"
+            :disabled="props.disabled"
           ></VInput>
         </div>
         <div class="flex flex-col">
@@ -288,6 +299,7 @@ const emit = defineEmits<{
             disable-month-year-select
             :min-date="firstDayOfMonth"
             :max-date="lastDayOfMonth"
+            :disabled="props.disabled"
             @cleared="state.travelDetails.endDateAndTime = undefined"
           ></VueDatePicker>
         </div>
@@ -303,6 +315,7 @@ const emit = defineEmits<{
             class="h-9 w-44"
             :list="Object.values(Country)"
             :selected="state.travelDetails.destinationCountryTwo"
+            :disabled="props.disabled"
             @selected="
               (index) =>
                 (state.travelDetails.destinationCountryTwo =
@@ -318,6 +331,7 @@ const emit = defineEmits<{
             v-model="state.travelDetails.destinationCityTwo"
             class="h-9"
             placeholder="Unesite grad"
+            :disabled="props.disabled"
           ></VInput>
         </div>
         <div class="flex flex-col">
@@ -330,6 +344,7 @@ const emit = defineEmits<{
             disable-month-year-select
             :min-date="firstDayOfMonth"
             :max-date="lastDayOfMonth"
+            :disabled="props.disabled"
             @cleared="state.travelDetails.endDAteAndTimeTwo = undefined"
           ></VueDatePicker>
         </div>
@@ -344,6 +359,7 @@ const emit = defineEmits<{
             v-model="state.travelDetails.travelPurpose"
             class="h-9 rounded-md border-2 bg-white px-2 text-black hover:ring-1 hover:ring-gray-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
             placeholder="Unesite razlog putovanja"
+            :disabled="props.disabled"
           ></textarea>
         </div>
         <div class="flex w-full flex-col">
@@ -354,6 +370,7 @@ const emit = defineEmits<{
             v-model="state.travelDetails.additionalInformation"
             class="h-9 rounded-md border-2 bg-white px-2 text-black hover:ring-1 hover:ring-gray-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
             placeholder="Unesite napomenu"
+            :disabled="props.disabled"
           ></textarea>
         </div></div
     ></VDisclosure>
@@ -370,6 +387,7 @@ const emit = defineEmits<{
             placeholder="Unesite iznos"
             type="number"
             :min-number="0"
+            :disabled="props.disabled"
           ></VInput>
         </div>
         <div class="flex flex-col">
@@ -381,6 +399,7 @@ const emit = defineEmits<{
             class="h-9 w-28"
             :list="Object.values(Currency)"
             :selected="state.advancePayment.currency"
+            :disabled="props.disabled"
             @selected="
               (index) =>
                 (state.advancePayment.currency = Object.values(Currency)[index])
@@ -396,6 +415,7 @@ const emit = defineEmits<{
             class="h-9 w-32"
             :list="Object.values(PaymentMethod)"
             :selected="state.advancePayment.paymentMethod"
+            :disabled="props.disabled"
             @selected="
               (index) =>
                 (state.advancePayment.paymentMethod =
@@ -413,6 +433,7 @@ const emit = defineEmits<{
             disable-month-year-select
             :min-date="firstDayOfMonth"
             :max-date="lastDayOfMonth"
+            :disabled="props.disabled"
             @cleared="state.advancePayment.paymentDate = undefined"
           ></VueDatePicker>
         </div>
@@ -426,6 +447,7 @@ const emit = defineEmits<{
           v-model="state.advancePayment.notes"
           class="h-9 rounded-md border-2 bg-white px-2 text-black hover:ring-1 hover:ring-gray-400 focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400 dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
           placeholder="Unesite napomenu"
+          :disabled="props.disabled"
         ></textarea>
       </div>
     </VDisclosure>
@@ -446,6 +468,7 @@ const emit = defineEmits<{
               class="h-9 w-full"
               placeholder="Unesite naziv prevoza"
               type="text"
+              :disabled="props.disabled"
             ></VInput>
           </div>
           <div class="flex flex-col">
@@ -458,6 +481,7 @@ const emit = defineEmits<{
               placeholder="Unesite količinu"
               type="number"
               :min-number="0"
+              :disabled="props.disabled"
               @update:model-value="
                 cost.amount && cost.quantity
                   ? (cost.totalAmount = cost.amount * cost.quantity)
@@ -475,6 +499,7 @@ const emit = defineEmits<{
               placeholder="Unesite iznos"
               type="number"
               :min-number="0"
+              :disabled="props.disabled"
               @update:model-value="
                 cost.amount && cost.quantity
                   ? (cost.totalAmount = cost.amount * cost.quantity)
@@ -493,7 +518,9 @@ const emit = defineEmits<{
             >
           </div>
           <VButton
-            v-if="state.travelExpense.transportCosts.length > 1"
+            v-if="
+              state.travelExpense.transportCosts.length > 1 || !props.disabled
+            "
             class="h-9 w-24 rounded-md"
             color="error"
             label="Ukloni"
@@ -501,6 +528,7 @@ const emit = defineEmits<{
           ></VButton>
         </div>
         <VButton
+          v-if="!props.disabled"
           class="w-32 rounded-md"
           color="success"
           label="Dodaj red"
@@ -521,6 +549,7 @@ const emit = defineEmits<{
             placeholder="Unesite kilometre"
             type="number"
             :min-number="0"
+            :disabled="props.disabled"
             @update:model-value="
               state.travelExpense.ownCarUsage.kilometersDriven
                 ? (state.travelExpense.ownCarUsage.totalAmount =
@@ -541,6 +570,7 @@ const emit = defineEmits<{
                   state.travelExpense.ownCarUsage.ratePerKilometer
               )?.label
             "
+            :disabled="props.disabled"
             @selected="
               (index) => {
                 state.travelExpense.ownCarUsage.ratePerKilometer =
@@ -581,6 +611,7 @@ const emit = defineEmits<{
               class="h-9 w-full"
               placeholder="Unesite naziv"
               type="text"
+              :disabled="props.disabled"
             ></VInput>
           </div>
           <div class="flex flex-col">
@@ -593,6 +624,7 @@ const emit = defineEmits<{
               placeholder="Unesite količinu"
               type="number"
               :min-number="0"
+              :disabled="props.disabled"
               @update:model-value="
                 cost.numberOfNights && cost.amountPerNight
                   ? (cost.totalAmount =
@@ -611,6 +643,7 @@ const emit = defineEmits<{
               placeholder="Unesite iznos"
               type="number"
               :min-number="0"
+              :disabled="props.disabled"
               @update:model-value="
                 cost.numberOfNights && cost.amountPerNight
                   ? (cost.totalAmount =
@@ -630,7 +663,10 @@ const emit = defineEmits<{
             >
           </div>
           <VButton
-            v-if="state.travelExpense.accommodationCosts.length > 1"
+            v-if="
+              state.travelExpense.accommodationCosts.length > 1 ||
+              !props.disabled
+            "
             class="h-9 w-24 rounded-md"
             color="error"
             label="Ukloni"
@@ -638,6 +674,7 @@ const emit = defineEmits<{
           ></VButton>
         </div>
         <VButton
+          v-if="!props.disabled"
           class="w-32 rounded-md"
           color="success"
           label="Dodaj red"
@@ -662,6 +699,7 @@ const emit = defineEmits<{
               class="h-9 w-full"
               placeholder="Unesite naziv"
               type="text"
+              :disabled="props.disabled"
             ></VInput>
           </div>
           <div class="flex flex-col">
@@ -674,6 +712,7 @@ const emit = defineEmits<{
               placeholder="Unesite količinu"
               type="number"
               :min-number="0"
+              :disabled="props.disabled"
               @update:model-value="
                 cost.quantity && cost.amount
                   ? (cost.totalAmount = cost.quantity * cost.amount)
@@ -691,6 +730,7 @@ const emit = defineEmits<{
               placeholder="Unesite iznos"
               type="number"
               :min-number="0"
+              :disabled="props.disabled"
               @update:model-value="
                 cost.quantity && cost.amount
                   ? (cost.totalAmount = cost.quantity * cost.amount)
@@ -704,12 +744,11 @@ const emit = defineEmits<{
               id="otherCostTotalAmount"
               name="otherCostTotalAmount"
               class="h-9 w-24 place-content-center"
-              disabled
               >{{ cost.totalAmount?.toFixed(2) }}</span
             >
           </div>
           <VButton
-            v-if="state.travelExpense.otherCosts.length > 1"
+            v-if="state.travelExpense.otherCosts.length > 1 || !props.disabled"
             class="h-9 w-24 rounded-md"
             color="error"
             label="Ukloni"
@@ -717,6 +756,7 @@ const emit = defineEmits<{
           ></VButton>
         </div>
         <VButton
+          v-if="!props.disabled"
           class="w-32 rounded-md"
           color="success"
           label="Dodaj red"
@@ -733,12 +773,14 @@ const emit = defineEmits<{
           class="w-24 self-center rounded-md"
           :color="state.travelExpense.isMealProvided ? 'success' : 'neutral'"
           label="Da"
+          :disabled="props.disabled"
           @click="state.travelExpense.isMealProvided = true"
         ></VButton>
         <VButton
           class="w-24 self-center rounded-md"
           :color="!state.travelExpense.isMealProvided ? 'error' : 'neutral'"
           label="Ne"
+          :disabled="props.disabled"
           @click="state.travelExpense.isMealProvided = false"
         ></VButton>
       </div>
@@ -746,6 +788,7 @@ const emit = defineEmits<{
 
     <div class="mt-6 flex gap-4 self-center">
       <VButton
+        v-if="!props.disabled"
         class="w-24 self-center rounded-md"
         color="success"
         label="Pošalji"
