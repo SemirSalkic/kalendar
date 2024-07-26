@@ -120,14 +120,14 @@ export interface OwnCarUsage {
 
 export interface AccommodationCost {
   accommodationType: string
-  numberOfNights?: number
-  amountPerNight?: number // in KM
+  numberOfNights: number
+  amountPerNight: number // in KM
   totalAmount?: number // in KM
 }
 
 export interface OtherCost {
   costName: string
-  quantity?: number
-  amount?: number // in KM
+  quantity: number
+  amount: number // in KM
   totalAmount?: number // in KM
 }
