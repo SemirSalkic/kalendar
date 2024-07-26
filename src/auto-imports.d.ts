@@ -14,6 +14,7 @@ declare global {
   const PaymentMethod: typeof import('./stores/types')['PaymentMethod']
   const RatePerKilometer: typeof import('./stores/types')['RatePerKilometer']
   const TabGroupType: typeof import('./stores/types')['TabGroupType']
+  const TravelEntryStatus: typeof import('./stores/types')['TravelEntryStatus']
   const TravelPurpose: typeof import('./stores/types')['TravelPurpose']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
@@ -195,6 +196,7 @@ declare global {
   const useIntervalFn: typeof import('@vueuse/core')['useIntervalFn']
   const useKeyModifier: typeof import('@vueuse/core')['useKeyModifier']
   const useLastChanged: typeof import('@vueuse/core')['useLastChanged']
+  const useLeaveRequestStore: typeof import('./stores/leaveRequest')['useLeaveRequestStore']
   const useLink: typeof import('vue-router')['useLink']
   const useLocalStorage: typeof import('@vueuse/core')['useLocalStorage']
   const useMagicKeys: typeof import('@vueuse/core')['useMagicKeys']
@@ -305,7 +307,7 @@ declare global {
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { TabGroupType, LeaveType, ErrorType, Categories, TravelPurpose, Currency, PaymentMethod, Country } from './stores/types'
+  export type { TabGroupType, LeaveType, ErrorType, Categories, TravelPurpose, Currency, PaymentMethod, Country, TravelEntryStatus } from './stores/types'
   import('./stores/types')
 }
 // for vue template auto import
@@ -321,6 +323,7 @@ declare module 'vue' {
     readonly LeaveType: UnwrapRef<typeof import('./stores/types')['LeaveType']>
     readonly PaymentMethod: UnwrapRef<typeof import('./stores/types')['PaymentMethod']>
     readonly TabGroupType: UnwrapRef<typeof import('./stores/types')['TabGroupType']>
+    readonly TravelEntryStatus: UnwrapRef<typeof import('./stores/types')['TravelEntryStatus']>
     readonly TravelPurpose: UnwrapRef<typeof import('./stores/types')['TravelPurpose']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -500,6 +503,7 @@ declare module 'vue' {
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>
+    readonly useLeaveRequestStore: UnwrapRef<typeof import('./stores/leaveRequest')['useLeaveRequestStore']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
     readonly useLocalStorage: UnwrapRef<typeof import('@vueuse/core')['useLocalStorage']>
     readonly useMagicKeys: UnwrapRef<typeof import('@vueuse/core')['useMagicKeys']>
@@ -616,6 +620,7 @@ declare module '@vue/runtime-core' {
     readonly LeaveType: UnwrapRef<typeof import('./stores/types')['LeaveType']>
     readonly PaymentMethod: UnwrapRef<typeof import('./stores/types')['PaymentMethod']>
     readonly TabGroupType: UnwrapRef<typeof import('./stores/types')['TabGroupType']>
+    readonly TravelEntryStatus: UnwrapRef<typeof import('./stores/types')['TravelEntryStatus']>
     readonly TravelPurpose: UnwrapRef<typeof import('./stores/types')['TravelPurpose']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -795,6 +800,7 @@ declare module '@vue/runtime-core' {
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>
+    readonly useLeaveRequestStore: UnwrapRef<typeof import('./stores/leaveRequest')['useLeaveRequestStore']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
     readonly useLocalStorage: UnwrapRef<typeof import('@vueuse/core')['useLocalStorage']>
     readonly useMagicKeys: UnwrapRef<typeof import('@vueuse/core')['useMagicKeys']>
