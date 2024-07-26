@@ -58,7 +58,7 @@ const emit = defineEmits<{
 
       <div class="fixed inset-0 overflow-y-auto">
         <div
-          class="flex min-h-full items-center justify-center p-4 text-center"
+          class="flex min-h-full items-center p-4 text-center md:justify-center"
         >
           <TransitionChild
             as="template"
