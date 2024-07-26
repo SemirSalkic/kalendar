@@ -18,7 +18,7 @@ const isDark = useDark()
 const calendarStore = useCalendarStore()
 const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(calendarStore)
 
-const state = useLocalStorage<TravelEntry>('travel-entry', {
+const state = ref<TravelEntry>({
   advancePayment: {
     amount: 0,
     currency: Currency.KM,
@@ -79,7 +79,6 @@ const emit = defineEmits<{
           v-model="state.travelDetails.purpose"
           class="h-9 w-full"
           :list="Object.values(TravelPurpose)"
-          pre-select
           :selected="state.travelDetails.purpose"
           @selected="
             (index) =>
@@ -97,7 +96,6 @@ const emit = defineEmits<{
             v-model="state.travelDetails.startingCountry"
             class="h-9 w-44"
             :list="Object.values(Country)"
-            pre-select
             :selected="state.travelDetails.startingCountry"
             @selected="
               (index) =>
@@ -140,7 +138,6 @@ const emit = defineEmits<{
             v-model="state.travelDetails.destinationCountry"
             class="h-9 w-44"
             :list="Object.values(Country)"
-            pre-select
             :selected="state.travelDetails.destinationCountry"
             @selected="
               (index) =>
@@ -176,7 +173,7 @@ const emit = defineEmits<{
 
       <div class="flex items-center gap-2">
         <div class="flex flex-col">
-          <label for="startingCountry">Odredišna država dva:</label>
+          <label for="destinationCountryTwo">Odredišna država dva:</label>
           <VDropdown
             id="destinationCountryTwo"
             name="destinationCountryTwo"
@@ -260,7 +257,6 @@ const emit = defineEmits<{
             v-model="state.advancePayment.currency"
             class="h-9 w-28"
             :list="Object.values(Currency)"
-            pre-select
             :selected="state.advancePayment.currency"
             @selected="
               (index) =>
@@ -276,7 +272,6 @@ const emit = defineEmits<{
             v-model="state.advancePayment.paymentMethod"
             class="h-9 w-32"
             :list="Object.values(PaymentMethod)"
-            pre-select
             :selected="state.advancePayment.paymentMethod"
             @selected="
               (index) =>
