@@ -32,12 +32,16 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
 
   function updateTravelEntryStatus(
     travelEntryId: string,
-    status: TravelEntryStatus
+    status: TravelEntryStatus,
+    travelEntry?: TravelEntry
   ): void {
     const index = travelEntryList.value.findIndex(
       (entry) => entry.travelEntryId === travelEntryId
     )
     if (index !== -1) {
+      if (travelEntry) {
+        travelEntryList.value[index] = travelEntry
+      }
       travelEntryList.value[index].travelEntryStatus = status
     }
   }
