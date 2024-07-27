@@ -3,6 +3,7 @@ import type { TravelEntry } from '@/stores/types'
 import type { DotListType } from './reusableComponents/DotMenu.vue'
 import { storeToRefs } from 'pinia'
 import { LockClosedIcon } from '@heroicons/vue/24/solid'
+import { cloneDeep } from 'lodash'
 
 enum AdminDotItemList {
   OPEN = 'Otvori',
@@ -162,8 +163,10 @@ function adminDotMenuItemClicked(item: string, travelEntryId?: string): void {
 
 function openDialog(travelEntryId: string, dialogType: AdminDotItemList): void {
   selectedTravelEntry.value =
-    travelEntryList.value.find(
-      (entry) => entry.travelEntryId === travelEntryId
+    cloneDeep(
+      travelEntryList.value.find(
+        (entry) => entry.travelEntryId === travelEntryId
+      )
     ) || null
 
   switch (dialogType) {
@@ -185,8 +188,14 @@ function openDialog(travelEntryId: string, dialogType: AdminDotItemList): void {
 function sendToBeCorrected(travelEntryId: string): void {
   leaveRequestStore.updateTravelEntryStatus(
     travelEntryId,
-    TravelEntryStatus.SENT_TO_BE_CORRECTED
+    TravelEntryStatus.SENT_TO_BE_CORRECTED,
+    selectedTravelEntry.value || undefined
   )
+  sendTravelEntryToBeCorrectedDialog.value = false
+}
+
+function cancelSendToBeCorrected(): void {
+  if (selectedTravelEntry.value) selectedTravelEntry.value.correctionReason = ''
   sendTravelEntryToBeCorrectedDialog.value = false
 }
 
@@ -197,65 +206,61 @@ function deleteTravelEntry(travelEntryId: string): void {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 p-4">
-    <div v-if="travelEntryList.length">
-      <div
-        v-for="entry in travelEntryList"
-        :key="entry.travelEntryId"
-        class="relative flex flex-col gap-2 rounded-lg border p-6 shadow-md"
+  <div v-if="travelEntryList.length" class="flex flex-col gap-4">
+    <div
+      v-for="entry in travelEntryList"
+      :key="entry.travelEntryId"
+      class="relative flex flex-col gap-2 rounded-lg border p-6 shadow-md"
+    >
+      <DotMenu
+        v-if="!entry.locked || isAdmin"
+        :list="
+          isAdmin
+            ? updatedAdminDotItemList(entry.locked || false).value
+            : userDotItemList
+        "
+        @item-click="adminDotMenuItemClicked($event, entry.travelEntryId)"
+      ></DotMenu>
+      <LockClosedIcon
+        v-if="entry.locked"
+        class="absolute right-14 top-4 z-50 h-6 w-6"
+      ></LockClosedIcon>
+      <span class="font-semibold">Broj naloga: {{ entry.travelEntryId }}</span>
+      <span>Datum prijave: {{ formatDate(entry.dateCreated) }}</span>
+      <span>
+        Registrovan od:
+        {{
+          `${entry.employeeNames.registeredByFirstName} ${entry.employeeNames.registeredByLastName}`
+        }}
+      </span>
+      <span>
+        Registrovani:
+        {{
+          `${entry.employeeNames.registeredEmployeeFirstName} ${entry.employeeNames.registeredEmployeeLastName}`
+        }}
+      </span>
+      <span>
+        Period trajanja:
+        {{
+          compareDatesAndFormat(
+            entry.travelDetails.startDateAndTIme?.toLocaleString() || '',
+            entry.travelDetails.endDateAndTime?.toLocaleString() || '',
+            entry.travelDetails.endDAteAndTimeTwo?.toLocaleString() || ''
+          )
+        }}
+      </span>
+      <span
+        v-if="leaveRequestStatus === TravelEntryStatus.SENT_TO_BE_CORRECTED"
+        class="text-red-500"
       >
-        <DotMenu
-          v-if="!entry.locked || isAdmin"
-          :list="
-            isAdmin
-              ? updatedAdminDotItemList(entry.locked || false).value
-              : userDotItemList
-          "
-          @item-click="adminDotMenuItemClicked($event, entry.travelEntryId)"
-        ></DotMenu>
-        <LockClosedIcon
-          v-if="entry.locked"
-          class="absolute right-14 top-4 z-50 h-6 w-6"
-        ></LockClosedIcon>
-        <span class="font-semibold"
-          >Broj naloga: {{ entry.travelEntryId }}</span
-        >
-        <span>Datum prijave: {{ formatDate(entry.dateCreated) }}</span>
-        <span>
-          Registrovan od:
-          {{
-            `${entry.employeeNames.registeredByFirstName} ${entry.employeeNames.registeredByLastName}`
-          }}
-        </span>
-        <span>
-          Registrovani:
-          {{
-            `${entry.employeeNames.registeredEmployeeFirstName} ${entry.employeeNames.registeredEmployeeLastName}`
-          }}
-        </span>
-        <span>
-          Period trajanja:
-          {{
-            compareDatesAndFormat(
-              entry.travelDetails.startDateAndTIme?.toLocaleString() || '',
-              entry.travelDetails.endDateAndTime?.toLocaleString() || '',
-              entry.travelDetails.endDAteAndTimeTwo?.toLocaleString() || ''
-            )
-          }}
-        </span>
-        <span
-          v-if="leaveRequestStatus === TravelEntryStatus.SENT_TO_BE_CORRECTED"
-          class="text-red-500"
-        >
-          Napomena: {{ entry.correctionReason }}
-        </span>
-      </div>
+        Napomena: {{ entry.correctionReason }}
+      </span>
     </div>
-    <div v-else>
-      <span class="font-semibold text-black dark:text-white"
-        >Nema zahtjeva za službeno putovanje!</span
-      >
-    </div>
+  </div>
+  <div v-else>
+    <span class="font-semibold text-black dark:text-white"
+      >Nema zahtjeva za službeno putovanje!</span
+    >
   </div>
   <VDialog v-model="travelEntryDialog" class="min-w-[720px] px-4 py-6">
     <div class="w-full pt-2">
@@ -277,6 +282,7 @@ function deleteTravelEntry(travelEntryId: string): void {
     cancel-text="Otkaži"
     :disabled-confirm="!selectedTravelEntry.correctionReason"
     @confirm="sendToBeCorrected(selectedTravelEntry.travelEntryId)"
+    @cancel="cancelSendToBeCorrected"
   >
     <div class="flex w-full flex-col">
       <label class="text-black dark:text-white" for="correctionReason"
