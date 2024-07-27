@@ -223,7 +223,7 @@ function deleteTravelEntry(travelEntryId: string): void {
       ></DotMenu>
       <LockClosedIcon
         v-if="entry.locked"
-        class="absolute right-14 top-4 z-50 h-6 w-6"
+        class="absolute right-14 top-4 z-40 h-6 w-6"
       ></LockClosedIcon>
       <span class="font-semibold">Broj naloga: {{ entry.travelEntryId }}</span>
       <span>Datum prijave: {{ formatDate(entry.dateCreated) }}</span>
