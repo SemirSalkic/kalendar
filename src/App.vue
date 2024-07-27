@@ -1,15 +1,29 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+
 const isDark = useDark()
 const isDialogOpen = ref(false)
 const tabGroupList = Object.values(TabGroupType)
 const RegisterCategoriesList = Object.values(Categories)
+const authStore = useAuthStore()
+const { user, isAdmin } = storeToRefs(authStore)
 </script>
 
 <template>
   <main
     class="flex h-full flex-col bg-white p-2 text-black dark:bg-black dark:text-white md:p-8"
   >
-    <div class="flex items-center self-end p-2">
+    <div class="flex items-center gap-2 self-end p-2">
+      <label class="mr-2">Ime:</label>
+      <VInput v-model="user.name" class="w-40" placeholder="Ime"></VInput>
+      <label class="mr-2">Prezime:</label>
+      <VInput
+        v-model="user.lastName"
+        class="w-40"
+        placeholder="Prezime"
+      ></VInput>
+      <span class="mr-2">Is admin:</span>
+      <VSwitch v-model="isAdmin"></VSwitch>
       <span class="mr-2">Dark mode:</span>
       <VSwitch v-model="isDark"></VSwitch>
     </div>
