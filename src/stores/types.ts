@@ -42,10 +42,10 @@ export enum Categories {
 // Travel Purpose
 
 export enum TravelPurpose {
-  WorkMeeting = 'Radni Sastanak',
-  Business = 'Poslovno',
-  Conference = 'Konferencija',
-  Other = 'Ostalo'
+  WORK_MEETING = 'Radni Sastanak',
+  BUSINESS = 'Poslovno',
+  CONFERENCE = 'Konferencija',
+  OTHER = 'Ostalo'
 }
 
 export enum Currency {
@@ -55,26 +55,26 @@ export enum Currency {
 }
 
 export enum PaymentMethod {
-  Card = 'Kartica',
-  Cash = 'Gotovina',
-  BankTransfer = 'Bankovni Transfer',
-  Other = 'Ostalo'
+  CARD = 'Kartica',
+  CASH = 'Gotovina',
+  BANK_TRANSFER = 'Bankovni Transfer',
+  OTHER = 'Ostalo'
 }
 
 export enum Country {
-  BosniaAndHerzegovina = 'Bosna i Hercegovina',
-  Croatia = 'Hrvatska',
-  Serbia = 'Srbija',
-  Montenegro = 'Crna Gora',
-  Slovenia = 'Slovenija',
-  Other = 'Ostalo'
+  BOSNIA_AND_HERZEGOVINA = 'Bosna i Hercegovina',
+  CROATIA = 'Hrvatska',
+  SERBIA = 'Srbija',
+  MONTENEGRO = 'Crna Gora',
+  SLOVENIA = 'Slovenija',
+  OTHER = 'Ostalo'
 }
 
 export enum TravelEntryStatus {
-  Pending = 'Na Čekanju',
-  Approved = 'Odobreno',
-  SentToBeCorrected = 'Poslano na ispravku',
-  Rejected = 'Odbijeno'
+  PENDING = 'Na obradi',
+  REJECTED = 'Otkazano',
+  SENT_TO_BE_CORRECTED = 'Poslano na korekciju',
+  APPROVED = 'Zaključeno'
 }
 
 export type RatePerKilometer = 1.5 | 1.75 | 1.88 | 2.25 | 2.65 | 2.88
@@ -82,6 +82,8 @@ export type RatePerKilometer = 1.5 | 1.75 | 1.88 | 2.25 | 2.65 | 2.88
 export interface TravelEntry {
   travelEntryId?: string
   travelEntryStatus?: TravelEntryStatus
+  correctionReason?: string
+  locked?: boolean
   dateCreated?: Date
   datesUpdated?: Date[]
   employeeNames: EmployeeNames
