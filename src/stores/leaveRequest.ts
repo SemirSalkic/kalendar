@@ -1,33 +1,16 @@
 import { type TravelEntry } from './types'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useLeaveRequestStore = defineStore('leaveRequest', () => {
   const travelEntryList = useLocalStorage<TravelEntry[]>('travelEntryList', [])
 
-  const getTravelEntryPendingList = computed(() =>
-    travelEntryList.value.filter(
-      (entry) => entry.travelEntryStatus === TravelEntryStatus.Pending
+  const getTravelEntryListByStatus = (status: TravelEntryStatus) =>
+    computed(() =>
+      travelEntryList.value.filter(
+        (entry) => entry.travelEntryStatus === status
+      )
     )
-  )
-
-  const getTravelEntryApprovedList = computed(() =>
-    travelEntryList.value.filter(
-      (entry) => entry.travelEntryStatus === TravelEntryStatus.Approved
-    )
-  )
-
-  const getTravelEntryRejectedList = computed(() =>
-    travelEntryList.value.filter(
-      (entry) => entry.travelEntryStatus === TravelEntryStatus.Rejected
-    )
-  )
-
-  const getTravelEntrySentToBeCorrectedList = computed(() =>
-    travelEntryList.value.filter(
-      (entry) => entry.travelEntryStatus === TravelEntryStatus.SentToBeCorrected
-    )
-  )
 
   function addTravelEntry(travelEntry: TravelEntry): void {
     travelEntryList.value.push(travelEntry)
@@ -47,14 +30,40 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     travelEntryList.value.splice(index, 1)
   }
 
+  function updateTravelEntryStatus(
+    travelEntryId: string,
+    status: TravelEntryStatus
+  ): void {
+    const index = travelEntryList.value.findIndex(
+      (entry) => entry.travelEntryId === travelEntryId
+    )
+    if (index !== -1) {
+      travelEntryList.value[index].travelEntryStatus = status
+    }
+  }
+
+  function lockOrUnlockTravelEntry(travelEntryId: string): void {
+    const index = travelEntryList.value.findIndex(
+      (entry) => entry.travelEntryId === travelEntryId
+    )
+    travelEntryList.value[index].locked = !travelEntryList.value[index].locked
+  }
+
+  function deleteTravelEntry(travelEntryId: string): void {
+    const index = travelEntryList.value.findIndex(
+      (entry) => entry.travelEntryId === travelEntryId
+    )
+    travelEntryList.value.splice(index, 1)
+  }
+
   return {
     travelEntryList,
-    getTravelEntryPendingList,
-    getTravelEntryApprovedList,
-    getTravelEntryRejectedList,
-    getTravelEntrySentToBeCorrectedList,
+    getTravelEntryListByStatus,
     addTravelEntry,
     updateTravelEntry,
-    removeTravelEntry
+    removeTravelEntry,
+    updateTravelEntryStatus,
+    lockOrUnlockTravelEntry,
+    deleteTravelEntry
   }
 })
