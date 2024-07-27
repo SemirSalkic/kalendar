@@ -11,6 +11,8 @@ declare module 'vue' {
     CalendarView: typeof import('./components/CalendarView.vue')['default']
     ConfirmationDialog: typeof import('./components/ConfirmationDialog.vue')['default']
     ErrorText: typeof import('./components/reusableComponents/ErrorText.vue')['default']
+    LeaveRequestCollection: typeof import('./components/LeaveRequestCollection.vue')['default']
+    LeaveRequestList: typeof import('./components/LeaveRequestList.vue')['default']
     RegisterLeave: typeof import('./components/RegisterLeave.vue')['default']
     TitleComponent: typeof import('./components/reusableComponents/TitleComponent.vue')['default']
     TravelLeave: typeof import('./components/TravelLeave.vue')['default']

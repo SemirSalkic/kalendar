@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useLeaveRequestStore = defineStore('leaveRequest', () => {
-  const travelEntryList = ref<TravelEntry[]>([])
+  const travelEntryList = useLocalStorage<TravelEntry[]>('travelEntryList', [])
 
   const getTravelEntryPendingList = computed(() =>
     travelEntryList.value.filter(
@@ -40,6 +40,13 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     travelEntryList.value[index] = travelEntry
   }
 
+  function removeTravelEntry(travelEntryId: string): void {
+    const index = travelEntryList.value.findIndex(
+      (entry) => entry.travelEntryId === travelEntryId
+    )
+    travelEntryList.value.splice(index, 1)
+  }
+
   return {
     travelEntryList,
     getTravelEntryPendingList,
@@ -47,6 +54,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     getTravelEntryRejectedList,
     getTravelEntrySentToBeCorrectedList,
     addTravelEntry,
-    updateTravelEntry
+    updateTravelEntry,
+    removeTravelEntry
   }
 })

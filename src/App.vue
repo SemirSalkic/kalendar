@@ -14,9 +14,9 @@ const RegisterCategoriesList = Object.values(Categories)
       <VSwitch v-model="isDark"></VSwitch>
     </div>
     <div class="flex h-full overflow-auto md:justify-center">
-      <VTabGroup :list="tabGroupList">
+      <VTabGroup :list="tabGroupList" class="min-w-[720px]">
         <template v-slot:[TabGroupType.CALENDAR]>
-          <div class="min-w-[720px] self-center rounded-xl border-2 p-4">
+          <div class="self-center rounded-xl border-2 p-4">
             <div class="mb-4 flex w-full items-center justify-between">
               <TitleComponent title="Kalendar"></TitleComponent>
               <VButton
@@ -31,10 +31,7 @@ const RegisterCategoriesList = Object.values(Categories)
         </template>
         <template v-slot:[TabGroupType.REQUESTS]>
           <div class="min-w-[720px] self-center rounded-xl border-2 p-4">
-            <div class="mb-4 flex w-full items-center justify-between">
-              <TitleComponent title="Odsustva"></TitleComponent>
-            </div>
-            // This is a placeholder for the requests component
+            <LeaveRequestCollection></LeaveRequestCollection>
           </div>
         </template>
       </VTabGroup>
