@@ -3,6 +3,7 @@ import { type TravelEntry, type RatePerKilometer } from '@/stores/types'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { storeToRefs } from 'pinia'
+import { cloneDeep } from 'lodash'
 
 const props = defineProps<{
   travelEntryId?: string
@@ -13,6 +14,8 @@ const isDark = useDark()
 const calendarStore = useCalendarStore()
 const { firstDayOfMonth, lastDayOfMonth } = storeToRefs(calendarStore)
 const leaveRequestStore = useLeaveRequestStore()
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
 const timestamp = useTimestamp({ offset: 30 })
 
 const rates: { label: string; value: RatePerKilometer }[] = [
@@ -46,7 +49,7 @@ const otherCostsDefault = {
 }
 
 const state = ref<TravelEntry>({
-  travelEntryStatus: TravelEntryStatus.Pending,
+  travelEntryStatus: TravelEntryStatus.PENDING,
   datesUpdated: [],
   employeeNames: {
     registeredByFirstName: '',
@@ -57,15 +60,15 @@ const state = ref<TravelEntry>({
   advancePayment: {
     amount: 0,
     currency: Currency.KM,
-    paymentMethod: PaymentMethod.Card,
+    paymentMethod: PaymentMethod.CARD,
     paymentDate: undefined,
     notes: ''
   },
   travelDetails: {
-    purpose: TravelPurpose.WorkMeeting,
-    startingCountry: Country.BosniaAndHerzegovina,
+    purpose: TravelPurpose.WORK_MEETING,
+    startingCountry: Country.BOSNIA_AND_HERZEGOVINA,
     startingCity: '',
-    destinationCountry: Country.BosniaAndHerzegovina,
+    destinationCountry: Country.BOSNIA_AND_HERZEGOVINA,
     destinationCountryTwo: undefined,
     destinationCity: '',
     destinationCityTwo: '',
@@ -113,7 +116,16 @@ function removeOtherCost(index: number) {
 }
 
 function saveTravelEntry() {
+  state.value.employeeNames.registeredByFirstName = user.value.name
+  state.value.employeeNames.registeredByLastName = user.value.lastName
+
   if (props.travelEntryId) {
+    if (
+      state.value.travelEntryStatus === TravelEntryStatus.SENT_TO_BE_CORRECTED
+    ) {
+      state.value.travelEntryStatus = TravelEntryStatus.PENDING
+      state.value.correctionReason = ''
+    }
     state.value.datesUpdated?.push(new Date())
     leaveRequestStore.updateTravelEntry(state.value)
   } else {
@@ -131,10 +143,10 @@ const emit = defineEmits<{
 watch(
   () => props.travelEntryId,
   (value) => {
-    state.value =
-      leaveRequestStore.travelEntryList.find(
-        (entry) => entry.travelEntryId === value
-      ) ?? state.value
+    const foundEntry = leaveRequestStore.travelEntryList.find(
+      (entry) => entry.travelEntryId === value
+    )
+    state.value = foundEntry ? cloneDeep(foundEntry) : state.value
   },
   { immediate: true }
 )
@@ -152,31 +164,7 @@ watch(
       Broj naloga: {{ travelEntryId }}
     </span>
 
-    <VDisclosure title="Osobni podaci">
-      <div class="flex gap-2">
-        <div class="flex w-full flex-col">
-          <label for="registeredByFirstName">Ime podnosioca:</label>
-          <VInput
-            id="registeredByFirstName"
-            name="registeredByFirstName"
-            v-model="state.employeeNames.registeredByFirstName"
-            class="h-9"
-            placeholder="Unesite ime"
-            :disabled="props.disabled"
-          ></VInput>
-        </div>
-        <div class="flex w-full flex-col">
-          <label for="registeredByLastName">Prezime podnosioca:</label>
-          <VInput
-            id="registeredByLastName"
-            name="registeredByLastName"
-            v-model="state.employeeNames.registeredByLastName"
-            class="h-9"
-            placeholder="Unesite prezime"
-            :disabled="props.disabled"
-          ></VInput>
-        </div>
-      </div>
+    <VDisclosure title="Podaci o registrovanom">
       <div class="flex gap-2">
         <div class="flex w-full flex-col">
           <label for="registeredEmployeeFirstName">Ime registrovanog:</label>
