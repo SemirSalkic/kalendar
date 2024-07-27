@@ -71,7 +71,7 @@ export enum Country {
 }
 
 export enum TravelEntryStatus {
-  Pending = 'Na Cekanju',
+  Pending = 'Na Čekanju',
   Approved = 'Odobreno',
   SentToBeCorrected = 'Poslano na ispravku',
   Rejected = 'Odbijeno'
