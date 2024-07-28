@@ -4,7 +4,6 @@ import type { DotListType } from './reusableComponents/DotMenu.vue'
 import { storeToRefs } from 'pinia'
 import { LockClosedIcon } from '@heroicons/vue/24/solid'
 import { cloneDeep } from 'lodash'
-import exportFromJSON from 'export-from-json'
 import { formatDate } from '@/utils'
 
 enum AdminDotItemList {
