@@ -37,20 +37,20 @@ function travelEntryClick(travelEntry: TravelEntry) {
       <div
         v-for="(travelEntry, index) in travelEntryList"
         :key="index"
-        class="flex gap-2 rounded-md bg-green-700 p-2 text-xs text-white"
+        class="flex items-center gap-2 rounded-md bg-green-700 p-2 text-xs text-white"
         :class="{
           'hover:cursor-pointer hover:bg-opacity-70 active:bg-opacity-80':
             !travelEntry.locked
         }"
         @click="travelEntry.locked ?? travelEntryClick(travelEntry)"
       >
-        <LockClosedIcon
-          v-if="travelEntry.locked"
-          class="mr-2 mt-2 h-6 w-6"
-        ></LockClosedIcon>
         <span>{{
           `${travelEntry.travelDetails.purpose} - ${travelEntry.employeeNames.registeredEmployeeFirstName} ${travelEntry.employeeNames.registeredEmployeeLastName}`
         }}</span>
+        <LockClosedIcon
+          v-if="travelEntry.locked"
+          class="h-6 w-6"
+        ></LockClosedIcon>
       </div>
     </div>
   </div>
