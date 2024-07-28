@@ -212,19 +212,21 @@ function deleteTravelEntry(travelEntryId: string): void {
       :key="entry.travelEntryId"
       class="relative flex flex-col gap-2 rounded-lg border p-6 shadow-md"
     >
-      <DotMenu
-        v-if="!entry.locked || isAdmin"
-        :list="
-          isAdmin
-            ? updatedAdminDotItemList(entry.locked || false).value
-            : userDotItemList
-        "
-        @item-click="adminDotMenuItemClicked($event, entry.travelEntryId)"
-      ></DotMenu>
-      <LockClosedIcon
-        v-if="entry.locked"
-        class="absolute right-14 top-4 z-40 h-6 w-6"
-      ></LockClosedIcon>
+      <div class="absolute right-2 top-2 flex">
+        <LockClosedIcon
+          v-if="entry.locked"
+          class="z-40 mr-2 mt-2 h-6 w-6"
+        ></LockClosedIcon>
+        <DotMenu
+          v-if="!entry.locked || isAdmin"
+          :list="
+            isAdmin
+              ? updatedAdminDotItemList(entry.locked || false).value
+              : userDotItemList
+          "
+          @item-click="adminDotMenuItemClicked($event, entry.travelEntryId)"
+        ></DotMenu>
+      </div>
       <span class="font-semibold">Broj naloga: {{ entry.travelEntryId }}</span>
       <span>Datum prijave: {{ formatDate(entry.dateCreated) }}</span>
       <span>
