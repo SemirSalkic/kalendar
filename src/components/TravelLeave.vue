@@ -789,18 +789,22 @@ watch(
 
     <div class="mt-6 flex gap-4 self-center">
       <VButton
-        v-if="!props.disabled"
-        class="w-24 self-center rounded-md"
+        v-if="!props.disabled || (props.disabled && travelEntryId)"
+        class="self-center rounded-md"
         color="success"
-        label="Pošalji"
-        @click="saveTravelEntry"
-      ></VButton>
+        :label="props.disabled ? 'Preuzmi' : 'Pošalji'"
+        @click="
+          props.disabled && travelEntryId
+            ? leaveRequestStore.downloadCSVFile(travelEntryId)
+            : saveTravelEntry()
+        "
+      />
       <VButton
-        class="w-24 self-center rounded-md"
+        class="self-center rounded-md"
         color="error"
         label="Zatvori"
         @click="emit('cancel')"
-      ></VButton>
+      />
     </div>
   </div>
 </template>
