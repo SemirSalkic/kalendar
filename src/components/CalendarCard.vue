@@ -42,7 +42,7 @@ function travelEntryClick(travelEntry: TravelEntry) {
           'hover:cursor-pointer hover:bg-opacity-70 active:bg-opacity-80':
             !travelEntry.locked
         }"
-        @click="travelEntry.locked ?? travelEntryClick(travelEntry)"
+        @click="!travelEntry.locked && travelEntryClick(travelEntry)"
       >
         <span>{{
           `${travelEntry.travelDetails.purpose} - ${travelEntry.employeeNames.registeredEmployeeFirstName} ${travelEntry.employeeNames.registeredEmployeeLastName}`
