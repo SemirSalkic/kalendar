@@ -1,21 +1,8 @@
 export interface Calendar {
   day: number | undefined
-  date?: Date
   isWeekend: boolean
   description?: string
-  travelEntry?: TravelEntry[]
-}
-export interface RangeConfig {
-  noDisabledRange?: boolean
-  showLastInRange?: boolean
-  minMaxRawRange?: boolean
-  partialRange?: boolean
-  disableTimeRangeValidation?: boolean
-  fixedStart?: boolean
-  fixedEnd?: boolean
-  maxRange?: string | number
-  minRange?: string | number
-  autoRange?: string | number
+  date?: Date
 }
 
 export enum TabGroupType {
