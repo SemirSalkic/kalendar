@@ -792,7 +792,7 @@ watch(
         v-if="!props.disabled || (props.disabled && travelEntryId)"
         class="self-center rounded-md"
         color="success"
-        :label="props.disabled ? 'Preuzmi' : 'Pošalji'"
+        :label="props.disabled ? 'Preuzmi nalog' : 'Pošalji'"
         @click="
           props.disabled && travelEntryId
             ? leaveRequestStore.downloadCSVFile(travelEntryId)
