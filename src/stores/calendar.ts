@@ -60,8 +60,6 @@ export const useCalendarStore = defineStore('calendar', () => {
       startDay.setUTCDate(startDay.getUTCDate() + 1)
     }
 
-    console.log(calendarDays.value)
-
     calendarDays.value = daysInMonth
   }
 
