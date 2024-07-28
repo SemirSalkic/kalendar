@@ -291,9 +291,9 @@ watch(
             v-model="state.travelDetails.endDateAndTime"
             :dark="isDark"
             disable-month-year-select
-            :min-date="firstDayOfMonth"
+            :min-date="state.travelDetails.startDateAndTIme"
             :max-date="lastDayOfMonth"
-            :disabled="props.disabled"
+            :disabled="props.disabled || !state.travelDetails.startDateAndTIme"
             @cleared="state.travelDetails.endDateAndTime = undefined"
           ></VueDatePicker>
         </div>
@@ -336,9 +336,13 @@ watch(
             v-model="state.travelDetails.endDAteAndTimeTwo"
             :dark="isDark"
             disable-month-year-select
-            :min-date="firstDayOfMonth"
+            :min-date="state.travelDetails.endDateAndTime"
             :max-date="lastDayOfMonth"
-            :disabled="props.disabled"
+            :disabled="
+              props.disabled ||
+              !state.travelDetails.startDateAndTIme ||
+              !state.travelDetails.endDateAndTime
+            "
             @cleared="state.travelDetails.endDAteAndTimeTwo = undefined"
           ></VueDatePicker>
         </div>
