@@ -17,7 +17,7 @@ export const formatDate = (date?: Date | string): string => {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false
+    hourCycle: 'h23'
   })
 }
 

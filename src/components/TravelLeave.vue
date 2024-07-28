@@ -246,6 +246,7 @@ watch(
             v-model="state.travelDetails.startDateAndTIme"
             :dark="isDark"
             disable-month-year-select
+            utc
             :min-date="firstDayOfMonth"
             :max-date="lastDayOfMonth"
             :disabled="props.disabled"
@@ -291,6 +292,7 @@ watch(
             v-model="state.travelDetails.endDateAndTime"
             :dark="isDark"
             disable-month-year-select
+            utc
             :min-date="state.travelDetails.startDateAndTIme"
             :max-date="lastDayOfMonth"
             :disabled="props.disabled || !state.travelDetails.startDateAndTIme"
@@ -336,6 +338,7 @@ watch(
             v-model="state.travelDetails.endDAteAndTimeTwo"
             :dark="isDark"
             disable-month-year-select
+            utc
             :min-date="state.travelDetails.endDateAndTime"
             :max-date="lastDayOfMonth"
             :disabled="
