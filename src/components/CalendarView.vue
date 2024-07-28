@@ -38,8 +38,6 @@ function checkIfBetweenDates(day?: Date): TravelEntry[] {
 }
 
 onMounted(() => {
-  console.log(isTodayInCurrentMonth.value)
-
   if (calendarDays.value.length === 0 || !isTodayInCurrentMonth.value) {
     calendarStore.generateCalendarDays()
   }

@@ -30,7 +30,13 @@ export const useCalendarStore = defineStore('calendar', () => {
   )
 
   const isTodayInCurrentMonth = computed(() =>
-    calendarDays.value.some((day) => day.date === today.value)
+    calendarDays.value.some((day) => {
+      const dayDate = day.date ? new Date(day.date).toDateString() : null
+      const todayDate = today.value
+        ? new Date(today.value).toDateString()
+        : null
+      return dayDate === todayDate
+    })
   )
 
   function generateCalendarDays(): void {
