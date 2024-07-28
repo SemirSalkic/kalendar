@@ -4,6 +4,8 @@ import type { DotListType } from './reusableComponents/DotMenu.vue'
 import { storeToRefs } from 'pinia'
 import { LockClosedIcon } from '@heroicons/vue/24/solid'
 import { cloneDeep } from 'lodash'
+import exportFromJSON from 'export-from-json'
+import { formatDate } from '@/utils'
 
 enum AdminDotItemList {
   OPEN = 'Otvori',
@@ -14,6 +16,7 @@ enum AdminDotItemList {
   DATES_OF_UPDATES = 'Datumi izmjena',
   LOCK = 'Zaključaj',
   UNLOCK = 'Otključaj',
+  DOWNLOAD = 'Preuzmi putni nalog',
   DELETE = 'Izbriši'
 }
 
@@ -38,12 +41,14 @@ const adminDotItemList: DotListType[] = [
   { text: AdminDotItemList.PENDING },
   { text: AdminDotItemList.SENT_TO_BE_CORRECTED },
   { text: AdminDotItemList.DATES_OF_UPDATES },
+  { text: AdminDotItemList.DOWNLOAD },
   { text: AdminDotItemList.DELETE, emphasize: true }
 ]
 
 const userDotItemList: DotListType[] = [
   { text: AdminDotItemList.OPEN },
-  { text: AdminDotItemList.DATES_OF_UPDATES }
+  { text: AdminDotItemList.DATES_OF_UPDATES },
+  { text: AdminDotItemList.DOWNLOAD }
 ]
 
 const statusToDotItemMap: { [key in TravelEntryStatus]: AdminDotItemList } = {
@@ -104,20 +109,6 @@ function compareDatesAndFormat(
   return `${formatDate(dates[0])} - ${formatDate(dates[dates.length - 1])}`
 }
 
-function formatDate(date?: Date | string): string {
-  const parsedDate = date ? new Date(date) : null
-  if (!parsedDate || isNaN(parsedDate.getTime())) return 'Datum nije validan'
-
-  return parsedDate.toLocaleString(undefined, {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  })
-}
-
 function adminDotMenuItemClicked(item: string, travelEntryId?: string): void {
   if (!travelEntryId) return
 
@@ -154,6 +145,9 @@ function adminDotMenuItemClicked(item: string, travelEntryId?: string): void {
       break
     case AdminDotItemList.UNLOCK:
       leaveRequestStore.lockOrUnlockTravelEntry(travelEntryId)
+      break
+    case AdminDotItemList.DOWNLOAD:
+      leaveRequestStore.downloadCSVFile(travelEntryId)
       break
     case AdminDotItemList.DELETE:
       openDialog(travelEntryId, AdminDotItemList.DELETE)
