@@ -20,3 +20,20 @@ export const formatDate = (date?: Date | string): string => {
     hour12: false
   })
 }
+
+export const compareDatesAndFormat = (
+  startDate: string,
+  endDate: string,
+  endDateTwo: string
+): string => {
+  const dates = [startDate, endDate, endDateTwo]
+    .map((date) => new Date(date))
+    .filter((date) => !isNaN(date.getTime()))
+    .sort((a, b) => a.getTime() - b.getTime())
+
+  if (dates.length < 2) {
+    return 'Datum nije validan!'
+  }
+
+  return `${formatDate(dates[0])} - ${formatDate(dates[dates.length - 1])}`
+}

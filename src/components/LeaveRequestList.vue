@@ -4,7 +4,7 @@ import type { DotListType } from './reusableComponents/DotMenu.vue'
 import { storeToRefs } from 'pinia'
 import { LockClosedIcon } from '@heroicons/vue/24/solid'
 import { cloneDeep } from 'lodash'
-import { formatDate } from '@/utils'
+import { formatDate, compareDatesAndFormat } from '@/utils'
 
 enum AdminDotItemList {
   OPEN = 'Otvori',
@@ -90,23 +90,6 @@ const travelEntryList = computed(() => {
       ).value
   }
 })
-
-function compareDatesAndFormat(
-  startDate: string,
-  endDate: string,
-  endDateTwo: string
-): string {
-  const dates = [startDate, endDate, endDateTwo]
-    .map((date) => new Date(date))
-    .filter((date) => !isNaN(date.getTime()))
-    .sort((a, b) => a.getTime() - b.getTime())
-
-  if (dates.length < 2) {
-    return 'Datum nije validan!'
-  }
-
-  return `${formatDate(dates[0])} - ${formatDate(dates[dates.length - 1])}`
-}
 
 function adminDotMenuItemClicked(item: string, travelEntryId?: string): void {
   if (!travelEntryId) return
