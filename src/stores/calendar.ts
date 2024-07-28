@@ -30,43 +30,37 @@ export const useCalendarStore = defineStore('calendar', () => {
   )
 
   const isTodayInCurrentMonth = computed(() =>
-    calendarDays.value.some((day) => day.date === formatDate(today.value))
+    calendarDays.value.some((day) => day.date === today.value)
   )
 
-  function formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    })
-  }
-
   function generateCalendarDays(): void {
-    const currentYear = today.value.getFullYear()
-    const currentMonth = today.value.getMonth()
-    const startDay = new Date(currentYear, currentMonth, 1)
+    const currentYear = today.value.getUTCFullYear()
+    const currentMonth = today.value.getUTCMonth()
+    const startDay = new Date(Date.UTC(currentYear, currentMonth, 1))
 
     const daysInMonth: Calendar[] = []
 
     // Add padding for days before the first day of the month
-    const firstDayOfWeek = (startDay.getDay() + 6) % 7 // Adjust to make Monday the first day of the week
+    const firstDayOfWeek = (startDay.getUTCDay() + 6) % 7 // Adjust to make Monday the first day of the week
 
     daysInMonth.push(
       ...Array.from({ length: firstDayOfWeek }, () => ({
         day: undefined,
-        date: '',
+        date: undefined,
         isWeekend: false
       }))
     )
 
-    while (startDay.getMonth() === currentMonth) {
+    while (startDay.getUTCMonth() === currentMonth) {
       daysInMonth.push({
-        day: startDay.getDate(),
-        date: formatDate(startDay),
-        isWeekend: [0, 6].includes(startDay.getDay())
+        day: startDay.getUTCDate(),
+        date: new Date(startDay),
+        isWeekend: [0, 6].includes(startDay.getUTCDay())
       })
-      startDay.setDate(startDay.getDate() + 1)
+      startDay.setUTCDate(startDay.getUTCDate() + 1)
     }
+
+    console.log(calendarDays.value)
 
     calendarDays.value = daysInMonth
   }

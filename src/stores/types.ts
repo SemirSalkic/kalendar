@@ -1,6 +1,6 @@
 export interface Calendar {
   day: number | undefined
-  date: string
+  date?: Date
   isWeekend: boolean
   description?: string
   travelEntry?: TravelEntry[]
