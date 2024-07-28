@@ -13,7 +13,9 @@ const { user, isAdmin } = storeToRefs(authStore)
   <main
     class="flex h-full flex-col bg-white p-2 text-black dark:bg-black dark:text-white md:p-8"
   >
-    <div class="flex items-center gap-2 self-end p-2">
+    <div
+      class="flex min-w-[720px] items-center gap-2 p-2 text-sm md:justify-center"
+    >
       <label class="mr-2">Ime:</label>
       <VInput v-model="user.name" class="w-40" placeholder="Ime"></VInput>
       <label class="mr-2">Prezime:</label>
