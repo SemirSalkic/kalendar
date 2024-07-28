@@ -5,6 +5,7 @@ export const useAuthStore = defineStore('auth', () => {
     name: string
     lastName: string
   }>('user', { name: 'Foo', lastName: 'Bar' })
+
   const isAdmin = useLocalStorage<boolean>('isAdmin', false)
 
   return {
